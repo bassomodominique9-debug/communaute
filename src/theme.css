@@ -1,0 +1,48 @@
+/* Thème ED B-CENTER — bleu royal, palette premium. Charge en dernier : il remplace les couleurs existantes. */
+:root {
+  --ed-blue: #2456d6;
+  --ed-blue-dark: #1a3fa6;
+  --ed-blue-night: #0b1b45;
+  --ed-blue-soft: #e8efff;
+  --ed-turquoise: #5aa9ff;
+  --ed-turquoise-light: #a9d2ff;
+  --ed-gold: #e8b84a;
+  --ed-gradient: linear-gradient(135deg, #2456d6 0%, #1a3fa6 100%);
+  --ed-gradient-dark: linear-gradient(160deg, #0b1b45 0%, #1a3fa6 100%);
+  --ed-gradient-button: linear-gradient(135deg, #3a6ff0 0%, #2456d6 100%);
+  --ed-border: #e3e8f4;
+  --ed-text-muted: #66718a;
+  --ed-shadow-sm: 0 4px 14px rgba(11, 27, 69, 0.08);
+  --ed-shadow-lg: 0 18px 40px rgba(11, 27, 69, 0.18);
+  --ed-radius: 16px;
+}
+
+html, body { background: #f5f7fc; color: var(--ed-blue-night); font-family: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+
+/* Cartes et surfaces */
+.account-content-card, .catalog-card, .job-card, .service-card, .course-card, .news-card, .atelier-card, .referral-balance, .referral-stats div {
+  background: #ffffff; border: 1px solid var(--ed-border); border-radius: var(--ed-radius); box-shadow: var(--ed-shadow-sm);
+}
+
+/* Boutons */
+.button-primary, .button.button-primary { background: var(--ed-gradient-button); color: #fff; border: 0; box-shadow: 0 8px 18px rgba(36, 86, 214, 0.28); }
+.button-outline, .button.button-outline { background: #fff; color: var(--ed-blue); border: 1.5px solid #c9d7f7; }
+.button-danger { background: #d92d20; color: #fff; border: 0; }
+
+/* Titres */
+h1, h2, h3 { color: var(--ed-blue-night); letter-spacing: -0.01em; }
+.eyebrow { background: var(--ed-blue-soft); color: var(--ed-blue); border: 0; }
+
+/* Navigation inférieure : style application */
+.bottom-nav { background: rgba(255, 255, 255, 0.97); border-top: 1px solid #e3e8f4; box-shadow: 0 -10px 30px rgba(11, 27, 69, 0.10); }
+.bottom-nav-on { color: var(--ed-blue); }
+.bottom-nav-on .bottom-nav-icon { color: var(--ed-blue); }
+.bottom-nav-on::before { content: ""; display: block; width: 26px; height: 3px; border-radius: 99px; background: var(--ed-blue); margin-bottom: 2px; }
+
+/* En-tête */
+.site-header { background: var(--ed-gradient-dark); box-shadow: 0 6px 20px rgba(11, 27, 69, 0.25); }
+
+/* Liens et accents */
+a { color: var(--ed-blue); }
+.referral-code { color: #a9d2ff; }
+.pq-tab-on { background: var(--ed-gradient-button); color: #fff; }

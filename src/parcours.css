@@ -1,0 +1,65 @@
+.pq{display:grid;gap:14px}
+.pq-head h2{margin:4px 0 2px;color:var(--ed-blue-night)}
+.pq-head p{margin:0;color:var(--ed-text-muted)}
+.pq-tabs{display:flex;gap:6px;overflow-x:auto;padding:6px;background:#fff;border:1px solid var(--ed-border);border-radius:14px}
+.pq-tab{flex:0 0 auto;min-height:40px;padding:0 14px;border:0;border-radius:10px;background:transparent;font-weight:700;color:var(--ed-blue-dark)}
+.pq-tab-on{background:var(--ed-gradient);color:#fff}
+.pq-grid{display:grid;gap:12px}
+@media(min-width:760px){.pq-grid{grid-template-columns:1fr 1fr}}
+.pq-score{text-align:center;display:grid;justify-items:center;gap:6px}
+.pq-big{font-size:2.6rem;color:var(--ed-blue-night)}
+.pq-big small{font-size:1rem;color:var(--ed-text-muted)}
+.pq-state,.pq-st{display:inline-block;padding:4px 12px;border-radius:999px;font-size:.8rem;font-weight:800;background:#eef3f6;color:#345}
+.st-ok,.pq-st-sent{background:#e6faf0;color:#11653a}
+.st-warn,.pq-st-late{background:#fff4dc;color:#8a5a00}
+.st-off,.pq-st-todo{background:#fdecec;color:#9a2b2b}
+.pq-st-graded{background:#e6faf9;color:#07566b}
+.pq-metrics{list-style:none;padding:0;margin:4px 0 0;display:grid;gap:4px;font-size:.92rem}
+.pq-badges{display:flex;flex-wrap:wrap;gap:8px}
+.pq-badge{background:linear-gradient(145deg,#ffe39a,#f5b942);color:#4a3000;border-radius:999px;padding:5px 12px;font-weight:800;font-size:.82rem}
+.pq-row{display:grid;gap:2px;width:100%;text-align:left;padding:12px;border:1px solid var(--ed-border);border-radius:12px;background:#fff;margin-top:8px}
+.pq-list{display:grid;gap:12px}
+.pq-ex-head{width:100%;display:flex;justify-content:space-between;gap:10px;align-items:center;background:none;border:0;text-align:left;padding:0}
+.pq-ex-head small{display:block;color:var(--ed-text-muted)}
+.pq-ex-body{display:grid;gap:10px;margin-top:12px;border-top:1px solid var(--ed-border);padding-top:12px}
+.pq-form{display:grid;gap:10px}
+.pq-form textarea,.pq-form input{width:100%}
+.pq-q{border:1px solid var(--ed-border);border-radius:12px;padding:10px}
+.pq-choice{display:flex;gap:8px;align-items:center;padding:4px 0}
+.pq-choice input{width:auto}
+.pq-answer{display:grid;gap:6px}
+.pq-feedback{background:#f4fbfb;border-left:3px solid var(--ed-turquoise);padding:8px 10px;border-radius:8px}
+.pq-module .pq-mhead{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.pq-bar{height:10px;border-radius:99px;background:#e3edf1;overflow:hidden;margin:8px 0}
+.pq-bar span{display:block;height:100%;background:var(--ed-gradient-button);border-radius:99px}
+.pq-hint{margin:0;color:var(--ed-text-muted);font-size:.9rem}
+.pq-grade{font-weight:800;color:var(--ed-blue)}
+.pq-avg{margin:10px 0 0}
+.pm-top{display:flex}
+.pm-form{display:grid;gap:10px}
+.pm-form input{width:100%}
+.pm-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.pm-kpis div{background:#fff;border:1px solid var(--ed-border);border-radius:12px;padding:10px}
+.pm-kpis strong{display:block;font-size:1.3rem}
+.pm-scroll{overflow-x:auto}
+.pm-table{width:100%;border-collapse:collapse;font-size:.9rem}
+.pm-table th,.pm-table td{text-align:left;padding:8px;border-bottom:1px solid var(--ed-border);white-space:nowrap}
+.pm-ex-head{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;flex-wrap:wrap}
+.pm-sub{display:grid;gap:6px;border-top:1px solid var(--ed-border);padding:10px 0}
+.pm-grade{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.pm-grade input{width:90px}
+.pm-grade input[placeholder]{width:auto;flex:1;min-width:160px}
+.pm-quiz-q{border:1px dashed var(--ed-border);border-radius:12px;padding:10px;display:grid;gap:6px}
+.pm-report-overlay{position:fixed;inset:0;z-index:3000;background:rgba(7,27,43,.7);overflow:auto;padding:16px}
+.pm-report{background:#fff;color:#111;max-width:800px;margin:0 auto;padding:24px;border-radius:12px}
+.pm-report h1{font-size:1.5rem;margin:0 0 8px}
+.pm-report h3{margin:18px 0 6px}
+.pm-report-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.pm-sign{margin-top:24px;color:#555;font-size:.85rem}
+@media print{
+  body *{visibility:hidden}
+  .pm-report,.pm-report *{visibility:visible}
+  .pm-report-overlay{position:absolute;inset:0;background:none;padding:0}
+  .pm-report{box-shadow:none;max-width:none;border-radius:0}
+  .no-print{display:none!important}
+}

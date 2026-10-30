@@ -1,0 +1,9 @@
+.referral { display: grid; gap: 12px; }
+.referral-code-card { display: grid; justify-items: center; gap: 8px; padding: 18px; border-radius: 20px; background: var(--ed-gradient-dark); color: #fff; text-align: center; }
+.referral-code-card small { color: rgba(255,255,255,.8); }
+.referral-code { font-size: 1.6rem; letter-spacing: .08em; color: var(--ed-turquoise-light); }
+.referral-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.referral-stats div, .referral-balance div { display: grid; gap: 2px; padding: 12px; background: #fff; border: 1px solid var(--ed-border); border-radius: 14px; }
+.referral-stats strong, .referral-balance strong { font-size: 1.1rem; color: var(--ed-blue-night); }
+.referral-balance { display: grid; gap: 8px; }
+.referral-note { color: var(--ed-text-muted); }

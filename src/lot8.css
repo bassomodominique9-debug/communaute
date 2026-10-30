@@ -1,0 +1,11 @@
+.jobs-home, .jobs-page { display: grid; gap: 12px; }
+.jobs-home-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.jobs-empty { color: var(--ed-text-muted); }
+.job-card { display: grid; gap: 6px; }
+.job-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+.job-badge { padding: 3px 10px; border-radius: 999px; font-size: .78rem; font-weight: 800; }
+.job-verified { background: #e6faf0; color: #11653a; }
+.job-unverified { background: #f1f1f1; color: #666; }
+.job-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.job-modal { max-width: 560px; max-height: 90vh; overflow-y: auto; }
+.job-modal select { width: 100%; min-height: 46px; border: 1px solid var(--ed-border); border-radius: 10px; padding: 0 10px; }

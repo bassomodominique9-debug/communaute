@@ -1,0 +1,11 @@
+.catalogs-home, .photo-catalog { display: grid; gap: 12px; }
+.catalog-cards { display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 700px) { .catalog-cards { grid-template-columns: repeat(2, 1fr); } }
+.catalog-card { display: grid; gap: 4px; text-align: left; padding: 16px; border-radius: 18px; background: #fff; border: 1px solid var(--ed-border); box-shadow: var(--ed-shadow-sm); cursor: pointer; }
+.catalog-card strong { color: var(--ed-blue-night); }
+.catalog-card span { color: var(--ed-text-muted); font-size: .9rem; }
+.catalog-soon { opacity: .6; cursor: default; }
+.quote-box { display: grid; gap: 6px; padding: 12px; border-radius: 14px; background: #f4fbfb; border: 1px solid var(--ed-border); }
+.quote-line, .quote-total { display: flex; justify-content: space-between; gap: 8px; }
+.quote-total { border-top: 1px solid var(--ed-border); padding-top: 6px; font-size: 1.05rem; }
+.booking-note { color: var(--ed-text-muted); line-height: 1.4; }
