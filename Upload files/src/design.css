@@ -1,0 +1,39 @@
+/* Navigation inférieure : mobile uniquement */
+.bottom-nav { display: none; }
+@media (max-width: 1179px) {
+  body { padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+  .bottom-nav {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 1500;
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
+    background: rgba(255,255,255,.96); border-top: 1px solid var(--ed-border);
+    box-shadow: 0 -8px 24px rgba(4,24,38,.12); backdrop-filter: blur(10px);
+  }
+  .bottom-nav-item {
+    display: grid; justify-items: center; gap: 2px; min-height: 52px; padding: 4px 2px;
+    border: 0; background: transparent; color: var(--ed-text-muted); font-size: .68rem; font-weight: 700;
+  }
+  .bottom-nav-icon { font-size: 1.2rem; line-height: 1; }
+  .bottom-nav-on { color: var(--ed-blue); }
+  .bottom-nav-on .bottom-nav-icon { color: var(--ed-turquoise); transform: translateY(-2px); transition: transform .2s ease; }
+}
+
+/* En-tête : cloche et menu secondaire */
+.header-tools { display: inline-flex; align-items: center; gap: 6px; }
+.bell-button, .secondary-menu-button {
+  position: relative; display: grid; place-items: center; width: 42px; height: 42px;
+  border: 1px solid rgba(255,255,255,.35); border-radius: 12px; background: rgba(255,255,255,.14); color: #fff; font-size: 1.1rem;
+}
+.bell-badge {
+  position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 99px;
+  background: #e5484d; color: #fff; font-size: .68rem; font-weight: 800; display: grid; place-items: center;
+}
+
+/* Feuille du menu secondaire */
+.sheet-backdrop { position: fixed; inset: 0; z-index: 2000; background: rgba(7,27,43,.55); display: flex; align-items: flex-end; }
+.sheet {
+  width: 100%; padding: 12px 12px calc(16px + env(safe-area-inset-bottom, 0px)); background: #fff;
+  border-radius: 20px 20px 0 0; display: grid; gap: 6px; box-shadow: 0 -12px 30px rgba(4,24,38,.25);
+}
+.sheet-item { min-height: 50px; padding: 0 14px; border: 0; border-radius: 12px; background: #f4f8f9; text-align: left; font-size: 1rem; font-weight: 700; color: var(--ed-blue-night); }
+.sheet-danger { color: #b42318; }

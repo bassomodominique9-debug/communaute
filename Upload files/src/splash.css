@@ -1,0 +1,53 @@
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 14px;
+  padding: 24px;
+  background: radial-gradient(900px 500px at 80% -10%, rgba(25, 211, 208, .22), transparent 60%),
+    linear-gradient(160deg, #03121f 0%, #052b3a 55%, #064a5e 100%);
+  color: #fff;
+  transition: opacity .45s ease, transform .45s ease;
+}
+.splash-leave { opacity: 0; transform: scale(1.02); pointer-events: none; }
+
+.splash-mark { position: relative; width: 88px; height: 88px; display: flex; align-items: flex-end; gap: 8px; }
+.splash-bar {
+  display: block; width: 18px; border-radius: 4px 4px 2px 2px;
+  background: linear-gradient(180deg, #f5d27a, #c9a24b);
+  transform-origin: bottom; transform: scaleY(0);
+  animation: splash-grow .6s cubic-bezier(.2,.8,.2,1) forwards;
+}
+.splash-bar-1 { height: 34px; animation-delay: .15s; }
+.splash-bar-2 { height: 52px; animation-delay: .3s; }
+.splash-bar-3 { height: 72px; animation-delay: .45s; }
+.splash-arrow {
+  position: absolute; left: 4px; bottom: 74px; width: 62px; height: 2px;
+  background: #9df2ec; transform: rotate(-35deg); transform-origin: left center;
+  opacity: 0; animation: splash-fade .4s ease .75s forwards;
+}
+.splash-title {
+  font-weight: 900; font-size: 1.9rem; letter-spacing: .08em;
+  animation: splash-rise .6s ease .5s both;
+}
+.splash-slogan {
+  font-size: .95rem; color: rgba(255,255,255,.85); text-align: center;
+  animation: splash-rise .6s ease .75s both;
+}
+.splash-line { width: min(220px, 60vw); height: 3px; border-radius: 99px; background: rgba(255,255,255,.15); overflow: hidden; }
+.splash-line span {
+  display: block; height: 100%; width: 100%; background: linear-gradient(90deg, #19d3d0, #c9a24b);
+  transform: translateX(-100%); animation: splash-sweep 1.4s ease .6s forwards;
+}
+
+@keyframes splash-grow { to { transform: scaleY(1); } }
+@keyframes splash-fade { to { opacity: 1; } }
+@keyframes splash-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes splash-sweep { to { transform: translateX(0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-bar, .splash-arrow, .splash-title, .splash-slogan, .splash-line span { animation-duration: .01s; animation-delay: 0s; }
+}

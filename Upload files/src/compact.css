@@ -1,0 +1,61 @@
+/* Mise en page compacte et professionnelle (mobile d'abord) */
+
+/* 1. Navigation : plus de bouton hamburger (remplacé par la barre inférieure et le menu ⋯) */
+.mobile-menu-button { display: none !important; }
+@media (min-width: 1180px) { .mobile-menu-button { display: none !important; } }
+
+/* 2. Bloc de bienvenue supprimé de l'espace personnel */
+.account-welcome, .account-welcome-content { display: none !important; }
+
+/* Solde de parrainage près du profil */
+.referral-badge {
+  display: inline-grid; justify-items: center; gap: 2px; margin-top: 8px; padding: 6px 14px;
+  border: 1px solid var(--ed-border); border-radius: 999px; background: #f4fbfb; color: var(--ed-blue-night);
+}
+.referral-badge span { font-size: .72rem; color: var(--ed-text-muted); }
+.referral-badge strong { font-size: .95rem; color: var(--ed-blue); }
+
+/* 3. Contact : formulaire replié */
+.contact-open { width: 100%; }
+.contact-close { display: block; margin-left: auto; min-height: 36px; padding: 0 12px; border: 0; border-radius: 10px; background: #eef4f6; font-weight: 700; }
+
+/* 5. Design général : proportions mobiles */
+@media (max-width: 1179px) {
+  .button { min-height: 42px; padding: 9px 16px; font-size: .92rem; border-radius: 12px; }
+  .section-container { width: calc(100% - 28px); padding: 18px 0; }
+  .section-heading h2, .intro-content h1 { font-size: clamp(1.25rem, 5.5vw, 1.8rem); line-height: 1.2; }
+  .eyebrow { font-size: .68rem; padding: 3px 10px; }
+  .account-content-card, .job-card, .pq-row, .pq-list .account-content-card { padding: 12px; border-radius: 14px; gap: 8px; }
+  .service-card, .course-card, .news-card, .atelier-card { border-radius: 16px; }
+  .service-image-wrapper, .course-image-wrapper { aspect-ratio: 16 / 9; }
+  .service-card-content, .courses-grid .course-card-content { padding: 12px; gap: 8px; }
+  .service-card-content h3, .course-card h3 { font-size: 1rem; }
+  .bottom-nav-item { font-size: .6rem; min-height: 48px; }
+  .bottom-nav-icon { font-size: 1.05rem; }
+  .catalog-card, .referral-stats div, .referral-balance div { padding: 10px; border-radius: 14px; }
+  .catalog-cards { gap: 8px; }
+
+  /* Annonce : hauteur réduite */
+  .home-announcement { gap: 12px; padding-bottom: 4px; }
+  .home-announcement-image { width: min(100%, 200px); border-radius: 16px; }
+  .home-announcement-info { padding: 14px; border-radius: 16px; }
+  .home-announcement-info h2 { font-size: 1.15rem; margin: 4px 0 6px; }
+  .home-announcement-info p { margin-bottom: 8px; font-size: .9rem; }
+  .announcement-fact { padding: 8px 10px; }
+  .announcement-fact dd { font-size: 1rem; }
+
+  /* 6. Connexion et inscription : plein écran, équilibré */
+  .modal-backdrop { padding: 0; align-items: stretch; }
+  .auth-modal, .auth-modal.register-modal, .job-modal, .follow-modal {
+    width: 100%; max-width: none; height: 100%; min-height: 100%; margin: 0;
+    border-radius: 0; padding: 22px 18px calc(22px + env(safe-area-inset-bottom, 0px));
+    overflow-y: auto;
+  }
+  .auth-modal input, .auth-modal select { min-height: 44px; }
+  .modal-actions .button, .auth-required-content .button { width: 100%; }
+}
+
+/* Solde en haut à droite */
+.header-balance { display: grid; justify-items: end; gap: 0; padding: 4px 10px; border: 1px solid rgba(255,255,255,.35); border-radius: 12px; background: rgba(255,255,255,.12); color: #fff; line-height: 1.1; }
+.header-balance-amount { font-size: .8rem; font-weight: 800; }
+.header-balance small { font-size: .6rem; color: var(--ed-turquoise-light); text-decoration: underline; }

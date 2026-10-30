@@ -1,0 +1,23 @@
+.home-announcement-info .announcement-join { margin-top: 14px; }
+.top-learner { display: grid; gap: 12px; padding-bottom: 8px; }
+.top-learner-card { display: grid; justify-items: center; gap: 6px; padding: 26px 20px; text-align: center; border-radius: 22px; background: var(--ed-gradient-dark); color: #fff; box-shadow: var(--ed-shadow-lg); }
+.top-learner-card h2 { margin: 6px 0 0; color: #fff; }
+.top-learner-card p, .top-learner-card small { margin: 0; color: rgba(255,255,255,.85); }
+.top-learner-avatar { display: grid; place-items: center; width: 120px; height: 120px; border-radius: 50%; overflow: hidden; background: rgba(157,242,236,.16); border: 3px solid var(--ed-turquoise); font-size: 3rem; font-weight: 900; color: var(--ed-turquoise-light); }
+.top-learner-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.top-learner-preview { width: 96px; height: 96px; object-fit: cover; border-radius: 50%; }
+.follow-counts { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-top: 6px; font-size: .92rem; color: var(--ed-text-muted); }
+.follow-counts button { border: 0; background: none; padding: 4px 6px; color: var(--ed-blue-dark); font-weight: 600; }
+.follow-counts b { color: var(--ed-blue-night); }
+.follow-modal { max-width: 520px; }
+.admin-form { display: grid; gap: 10px; }
+.admin-form input, .admin-form textarea { width: 100%; }
+.top-learner-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.top-learner-form { display: grid; gap: 8px; width: 100%; }
+.top-learner-link { color: var(--ed-turquoise-light); font-weight: 700; }
+.search-form { display: flex; gap: 8px; flex-wrap: wrap; }
+.search-form input { flex: 1; min-width: 180px; min-height: 46px; border: 1px solid var(--ed-border); border-radius: 12px; padding: 0 12px; }
+.search-results { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 4px; }
+.school-button { margin-top: 8px; }
+.pay-methods { display: grid; gap: 10px; margin-bottom: 12px; }
+.pay-method { display: grid; gap: 6px; padding: 12px; border: 1px solid var(--ed-border); border-radius: 12px; background: #fff; }
