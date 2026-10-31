@@ -136,7 +136,7 @@ function CommunitySection({ user, profile, role, onNotify, onPointsUpdated }) {
         const interactions = post.interactions || [];
         const liked = interactions.some((r) => r.user_id === user?.id && r.interaction_type === "like");
         const postComments = interactions.filter((r) => r.interaction_type === "comment");
-        return <article className="publication-card" key={post.id}>
+        return <article className="publication-card" key={post.id} data-focus={`publication:${post.id}`}>
           <div className="publication-author" style={{ cursor: user ? "pointer" : "default" }} role="button" tabIndex={0} onClick={() => { if (!user) return; if (!post.author_id) { onNotify?.("Cette ancienne publication n'a pas d'auteur lié."); return; } window.dispatchEvent(new CustomEvent("ed-open-profile", { detail: post.author_id })); }}><AuthorAvatar card={post.author} /><div><strong>{post.author?.full_name || "ED BUSINESS CENTER"}</strong><AuthorBadge card={post.author} /><small>{new Date(post.created_at).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}</small></div></div>
           {post.title && <h2>{post.title}</h2>}<p className="publication-body">{post.body}</p>
           {post.image_url && <img className="publication-image" src={post.image_url} alt={post.title || "Publication ED B-CENTER"} loading="lazy" />}<AttachmentList items={post.attachments} />
