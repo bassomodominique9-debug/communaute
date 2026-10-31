@@ -4,7 +4,7 @@ import { imageUrl } from "./imageCatalog";
 import CoursePayment from "./CoursePayment";
 import { useSlot } from "./mediaSlots";
 
-const WA_URL = "https://wa.me/237653993968";
+const WA_URL = "https://wa.me/237690275953";
 const notify = (message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }));
 
 export default function HomeAnnouncement() {

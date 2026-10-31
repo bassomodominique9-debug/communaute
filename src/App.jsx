@@ -18,14 +18,12 @@ import { JobsHome, JobsPage } from "./JobsSection";
 import SchoolButton from "./SchoolButton";
 import { useCourseCatalog } from "./CourseCatalog";
 import CatalogPhoto, { CatalogsHome } from "./CatalogPhoto";
-import { BottomNav, BellButton, SecondaryMenu, MessageButton } from "./BottomNav";
-import { focusTarget } from "./deepLink";
+import { BottomNav, BellButton, SecondaryMenu } from "./BottomNav";
 import PendingReferral from "./PendingReferral";
 import { HeaderBalance } from "./ReferralBadge";
 import ReferralPanel from "./ReferralPanel";
 import ReferralBadge from "./ReferralBadge";
 import { CatalogPage } from "./CatalogPages";
-import CommunicationSpace from "./CommunicationSpace";
 import HomeAnnouncement from "./HomeAnnouncement";
 import LearnerVideos from "./LearnerVideos";
 import { playPing } from "./sound";
@@ -54,9 +52,8 @@ const BRAND = {
   description:
     "Un centre dédié à l'apprentissage pratique, au développement des compétences et à l'accompagnement vers l'entrepreneuriat.",
   email: "edbusinesscenter@gmail.com",
-  phone: "+237 653 99 39 68",
-  whatsapp: "https://wa.me/237653993968",
-  whatsappQr: "https://wa.me/qr/PQX3V3R25C3YI1",
+  phone: "+237 690 418 794",
+  whatsapp: "https://wa.me/237690418794",
   facebook:
     "https://www.facebook.com/profile.php?id=61595517983213",
   instagram:
@@ -68,7 +65,7 @@ const SOCIALS = [
   {
     name: "WhatsApp",
     image: "logo-ed-b-center.png",
-    url: BRAND.whatsappQr,
+    url: BRAND.whatsapp,
     description: "Contacter l'équipe ED BUSINESS CENTER sur WhatsApp",
   },
   {
@@ -451,7 +448,7 @@ function Header({
           </span>
         </button>
 
-        <span className="header-tools"><HeaderBalance /><MessageButton /><BellButton /><SecondaryMenu /></span>
+        <span className="header-tools"><HeaderBalance /><BellButton /><SecondaryMenu /></span>
 
         <button
           className="mobile-menu-button"
@@ -606,7 +603,7 @@ function MotivationCarousel() {
           <div className="motivation-actions">
             <a
               className="button button-light"
-              href={BRAND.whatsappQr}
+              href={BRAND.whatsapp}
               target="_blank"
               rel="noreferrer"
             >
@@ -1196,14 +1193,14 @@ function ContactSection() {
 
             <div>
               <strong>Téléphone</strong>
-              <a href="tel:+237653993968">
+              <a href="tel:+237690418794">
                 {BRAND.phone}
               </a>
             </div>
           </div>
 
           <a
-            href={BRAND.whatsappQr}
+            href={BRAND.whatsapp}
             className="button button-whatsapp"
             target="_blank"
             rel="noreferrer"
@@ -2418,10 +2415,8 @@ function App() {
       const value = String(event.detail || "");
       const map = { "publication": "community", "workshop": "atelier", "job": "jobs", "messages": "messages", "school": "account" };
       const kind = value.includes(":") ? value.split(":")[0] : "";
-      const id = value.includes(":") ? value.slice(kind.length + 1) : "";
       const target = kind ? map[kind] : value;
       if (target) navigateTo(target);
-      if (kind && id) focusTarget(value);
     };
     window.addEventListener("ed-navigate", handler);
     return () => window.removeEventListener("ed-navigate", handler);
@@ -3003,8 +2998,6 @@ return (
         {activePage === "photo" && <CatalogPhoto />}
 
         {activePage === "referral" && <ReferralPanel />}
-
-        {activePage === "communication" && <CommunicationSpace />}
 
         {activePage === "tableaux" && <CatalogPage catalog="tableaux" />}
 
