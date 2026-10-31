@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 import { uploadFile } from "./Attachments";
 import PaymentFlow from "./PaymentFlow";
+import { SeekerCard, SeekerModal } from "./SeekerProfile";
 import "./lot8.css";
 
 const notify = (message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }));
@@ -113,25 +114,6 @@ function OfferCard({ offer, compact, onApply, onDeleted }) {
   );
 }
 
-function SeekerCard({ s, onDeleted }) {
-  async function removeMine() {
-    if (!window.confirm("Supprimer ton profil de recherche d'emploi ?")) return;
-    const { error } = await supabase.rpc("delete_my_seeker_profile");
-    if (error) { notify(errMsg(error)); return; }
-    notify("Profil supprimé."); onDeleted?.();
-  }
-  return (
-    <article className="account-content-card job-card">
-      <strong>Candidat anonyme</strong>
-      {s.mine && <button type="button" className="button button-danger" onClick={removeMine}>Supprimer mon profil</button>}
-      <small>{[s.sex, s.age ? `${s.age} ans` : "", s.city, s.country].filter(Boolean).join(" · ")}</small>
-      <p><b>Compétences :</b> {s.skills || "—"}</p>
-      <p><b>Diplôme :</b> {s.diploma || "—"}</p>
-      <p><b>Dernier emploi :</b> {s.last_job || "—"}</p>
-    </article>
-  );
-}
-
 function Modal({ title, onClose, children }) {
   return (
     <div className="modal-backdrop" role="presentation">
@@ -195,52 +177,8 @@ function RecruiterModal({ onClose }) {
   );
 }
 
-function SeekerModal({ onClose }) {
-  const blank = { full_name: "", phone: "", skills: "", diploma: "", age: "", last_job: "", city: "", country: "", sex: "" };
-  const [f, setF] = useState(blank);
-  const [cv, setCv] = useState(null);
-  const [photo, setPhoto] = useState(null);
-  const [busy, setBusy] = useState(false);
-  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
-
-  async function save(event) {
-    event.preventDefault();
-    setBusy(true);
-    try {
-      const cvUrl = await uploadDoc(cv, "cv/");
-      const photoUrl = photo ? await uploadDoc(photo, "photos/") : null;
-      const { error } = await supabase.rpc("submit_seeker_profile", {
-        p_full_name: f.full_name, p_phone: f.phone, p_skills: f.skills, p_diploma: f.diploma,
-        p_age: f.age ? Number(f.age) : null, p_last_job: f.last_job, p_city: f.city, p_country: f.country,
-        p_sex: f.sex, p_cv: cvUrl, p_photo: photoUrl,
-      });
-      if (error) throw error;
-      notify("Ton profil est enregistré. Il apparaît anonymement dans la liste des candidats.");
-      onClose();
-    } catch (err) { notify(errMsg(err)); }
-    setBusy(false);
-  }
-
-  return (
-    <Modal title="Recherche d'emploi" onClose={onClose}>
-      <form className="admin-form" onSubmit={save}>
-        <p>Ton nom, ton téléphone et ton CV sont envoyés uniquement à l'administrateur. Ton profil public reste anonyme.</p>
-        <input value={f.full_name} onChange={set("full_name")} placeholder="Nom complet" required maxLength={120} />
-        <input value={f.phone} onChange={set("phone")} placeholder="Téléphone" required maxLength={30} />
-        <input value={f.skills} onChange={set("skills")} placeholder="Compétences" maxLength={500} />
-        <input value={f.diploma} onChange={set("diploma")} placeholder="Diplôme" maxLength={160} />
-        <input type="number" min="14" max="90" value={f.age} onChange={set("age")} placeholder="Âge" />
-        <input value={f.last_job} onChange={set("last_job")} placeholder="Dernier emploi" maxLength={200} />
-        <input value={f.city} onChange={set("city")} placeholder="Ville" maxLength={80} />
-        <input value={f.country} onChange={set("country")} placeholder="Pays" maxLength={80} />
-        <select value={f.sex} onChange={set("sex")}><option value="">Sexe</option><option>Femme</option><option>Homme</option><option>Autre</option></select>
-        <label>CV (obligatoire)<input type="file" accept=".pdf,.doc,.docx" onChange={(e) => setCv(e.target.files?.[0] || null)} required /></label>
-        <label>Photo (facultative)<input type="file" accept="image/*" onChange={(e) => setPhoto(e.target.files?.[0] || null)} /></label>
-        <button type="submit" className="button button-primary" disabled={busy}>{busy ? "Envoi…" : "Envoyer mon profil"}</button>
-      </form>
-    </Modal>
-  );
-}
+const TOOLS = ["Canva", "Photoshop", "Illustrator", "Lightroom", "Capture One", "Excel", "Power BI", "Word", "PowerPoint", "Autre"];
+const LEVELS = ["Débutant", "Intermédiaire", "Avancé"];
 
 function ApplyModal({ offer, onClose }) {
   const [f, setF] = useState({ full_name: "", phone: "", message: "" });
