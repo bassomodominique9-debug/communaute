@@ -1,0 +1,7 @@
+/* Élément ciblé par une notification : mise en évidence brève */
+.focus-flash { animation: focus-flash 2.4s ease both; border-radius: 18px; }
+@keyframes focus-flash {
+  0%, 40% { box-shadow: 0 0 0 3px rgba(36, 86, 214, 0.55), 0 0 24px rgba(36, 86, 214, 0.35); }
+  100% { box-shadow: none; }
+}
+@media (prefers-reduced-motion: reduce) { .focus-flash { animation: none; outline: 3px solid rgba(36, 86, 214, 0.6); } }
