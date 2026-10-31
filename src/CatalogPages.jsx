@@ -3,6 +3,7 @@ import { supabase } from "./supabaseClient";
 import { uploadFile } from "./Attachments";
 import PaymentFlow from "./PaymentFlow";
 import { useSlot } from "./mediaSlots";
+import { imageUrl } from "./imageCatalog";
 import { frameQuote } from "./pricing";
 import "./catalogs.css";
 
@@ -18,7 +19,8 @@ export function CatalogPage({ catalog }) {
   const [quoting, setQuoting] = useState(null);
   const [china, setChina] = useState("");
   const [ordering, setOrdering] = useState(null);
-  const hero = useSlot("cover_" + catalog);
+  const heroAssigned = useSlot("cover_" + catalog);
+  const hero = heroAssigned || imageUrl(`cover-${catalog}.png`);
 
   useEffect(() => {
     supabase.rpc("list_catalog", { p_catalog: catalog }).then(({ data, error }) => {
@@ -50,9 +52,14 @@ export function CatalogPage({ catalog }) {
   );
 }
 
+function slugify(text) {
+  return String(text || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
 export function ItemCard({ item, onQuote, onOrder }) {
   const [idx, setIdx] = useState(0);
-  const photos = item.gallery || [];
+  const gallery = item.gallery || [];
+  const photos = gallery.length > 0 ? gallery : [imageUrl(`prestation-${slugify(item.title)}.png`)];
   return (
     <article className="catalog-item">
       {photos.length > 0 ? (

@@ -4,6 +4,7 @@ import PaymentFlow from "./PaymentFlow";
 import { studioConfigFrom, studioQuote } from "./pricing";
 import { PhotoGallery } from "./CatalogPages";
 import { useSlot } from "./mediaSlots";
+import { imageUrl } from "./imageCatalog";
 import "./catalog.css";
 
 const go = (page) => window.dispatchEvent(new CustomEvent("ed-navigate", { detail: page }));
@@ -12,7 +13,8 @@ const errMsg = (e) => (/function|schema cache|does not exist/i.test(e?.message |
 const notify = (m) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: m }));
 
 function CoverCard({ slot, title, desc, page }) {
-  const url = useSlot(slot);
+  const assigned = useSlot(slot);
+  const url = assigned || imageUrl(`cover-${slot.replace("cover_", "")}.png`);
   return (
     <button type="button" className="catalog-card catalog-card-cover" onClick={() => go(page)}>
       {url && <img src={url} alt="" loading="lazy" />}
