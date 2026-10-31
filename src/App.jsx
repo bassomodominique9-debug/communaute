@@ -19,11 +19,13 @@ import SchoolButton from "./SchoolButton";
 import { useCourseCatalog } from "./CourseCatalog";
 import CatalogPhoto, { CatalogsHome } from "./CatalogPhoto";
 import { BottomNav, BellButton, SecondaryMenu } from "./BottomNav";
+import { focusTarget } from "./deepLink";
 import PendingReferral from "./PendingReferral";
 import { HeaderBalance } from "./ReferralBadge";
 import ReferralPanel from "./ReferralPanel";
 import ReferralBadge from "./ReferralBadge";
 import { CatalogPage } from "./CatalogPages";
+import CommunicationSpace from "./CommunicationSpace";
 import HomeAnnouncement from "./HomeAnnouncement";
 import LearnerVideos from "./LearnerVideos";
 import { playPing } from "./sound";
@@ -2415,8 +2417,10 @@ function App() {
       const value = String(event.detail || "");
       const map = { "publication": "community", "workshop": "atelier", "job": "jobs", "messages": "messages", "school": "account" };
       const kind = value.includes(":") ? value.split(":")[0] : "";
+      const id = value.includes(":") ? value.slice(kind.length + 1) : "";
       const target = kind ? map[kind] : value;
       if (target) navigateTo(target);
+      if (kind && id) focusTarget(value);
     };
     window.addEventListener("ed-navigate", handler);
     return () => window.removeEventListener("ed-navigate", handler);
@@ -2998,6 +3002,8 @@ return (
         {activePage === "photo" && <CatalogPhoto />}
 
         {activePage === "referral" && <ReferralPanel />}
+
+        {activePage === "communication" && <CommunicationSpace />}
 
         {activePage === "tableaux" && <CatalogPage catalog="tableaux" />}
 
