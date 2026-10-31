@@ -1,0 +1,4 @@
+.comm { display: grid; gap: 12px; }
+.comm-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.comm-row { align-items: flex-start; }
+.comm-kpis strong { font-size: 1.4rem; color: var(--ed-blue); }

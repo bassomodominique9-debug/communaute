@@ -9,3 +9,14 @@
 .job-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .job-modal { max-width: 560px; max-height: 90vh; overflow-y: auto; }
 .job-modal select { width: 100%; min-height: 46px; border: 1px solid var(--ed-border); border-radius: 10px; padding: 0 10px; }
+.seeker-form { gap: 10px; }
+.seeker-form h4 { margin: 14px 0 2px; color: var(--ed-blue); font-size: .95rem; }
+.seeker-hint { color: var(--ed-text-muted); font-size: .88rem; margin: 0; }
+.seeker-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.seeker-row label { display: grid; gap: 4px; font-size: .85rem; }
+.seeker-tools { display: flex; flex-wrap: wrap; gap: 6px; }
+.tool-chip { min-height: 34px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--ed-border); background: #fff; font-weight: 700; font-size: .82rem; color: var(--ed-blue-night); }
+.tool-on { background: var(--ed-gradient-button); color: #fff; border-color: transparent; }
+.seeker-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.seeker-tags span { padding: 3px 10px; border-radius: 999px; background: var(--ed-blue-soft); color: var(--ed-blue); font-size: .78rem; font-weight: 700; }
+.seeker-card p { margin: 0; font-size: .9rem; }

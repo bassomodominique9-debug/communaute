@@ -20,7 +20,7 @@
 
   /* Entrées d'écran : transition douce à chaque changement de page */
   .section-container, .account-content-card, .catalog-page, .referral, .jobs-page, .photo-catalog {
-    animation: app-enter .32s cubic-bezier(.2, .8, .2, 1) both;
+    animation: app-enter .32s cubic-bezier(.2, .8, .2, 1) backwards;
   }
 
   /* Zone de saisie : pas de zoom involontaire sur iPhone */
@@ -131,5 +131,28 @@
     max-width: calc(100% - 20px) !important; padding: 5px 11px !important;
     white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis;
     line-height: 1.25 !important; font-size: .78rem !important; border-radius: 999px !important;
+  }
+}
+
+/* ===== Fenêtres de formulaires : contenu entièrement accessible (défilement interne) ===== */
+@media (max-width: 1179px) {
+  .modal-backdrop { overflow: hidden; }
+  .auth-modal, .job-modal, .quote-modal, .follow-modal, .atelier-reservation-modal {
+    max-height: 92vh !important; max-height: 92dvh !important; overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch; overscroll-behavior: contain; display: block;
+  }
+  .employer-form, .seeker-form, .admin-form { padding-bottom: 12px; }
+}
+.skill-chip-soft { background: #f1f4fb; color: var(--ed-blue-night); }
+
+/* Fond des fenêtres : plein écran, feuille collée en bas, jamais coupée en haut */
+@media (max-width: 1179px) {
+  .modal-backdrop {
+    position: fixed !important; inset: 0 !important; display: flex !important;
+    flex-direction: column !important; justify-content: flex-end !important; align-items: stretch !important;
+    padding: 0 !important; overflow: hidden !important;
+  }
+  .auth-modal, .job-modal, .quote-modal, .follow-modal, .atelier-reservation-modal {
+    margin: 0 !important; margin-top: auto !important; width: 100% !important; align-self: stretch !important;
   }
 }

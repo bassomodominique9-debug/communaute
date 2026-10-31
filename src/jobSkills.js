@@ -14,3 +14,10 @@ export const NIVEAUX_LANGUE = ["Notions", "Intermédiaire", "Courant", "Bilingue
 export const DISPONIBILITES = ["Immédiate", "Sous 1 mois", "Sous 3 mois"];
 export const CONTRATS = ["CDI", "CDD", "Stage ou apprentissage", "Freelance ou mission", "Temps partiel", "Peu importe"];
 export const MOBILITES = ["Sur place uniquement", "Déplacement possible", "Télétravail", "Peu importe"];
+
+// Employeur : domaines d'activité, type d'entreprise, modalité de travail
+export const DOMAINES = ["Commerce et vente", "Communication et marketing", "Design graphique", "Photographie et vidéo", "Informatique et réseaux", "Data et analyse", "Logistique et transport", "Finance et comptabilité", "Santé et bien-être", "Éducation et formation", "Bâtiment et travaux", "Industrie et production", "Restauration et hôtellerie", "Administration et secrétariat", "Import-export et sourcing", "Autre"];
+export const SECTEURS = ["Commerce", "Services", "Industrie", "Technologie", "Éducation", "Santé", "Agriculture", "Autre"];
+export const TYPES_ENTREPRISE = ["En ligne uniquement", "Présence physique", "En ligne et présence physique"];
+export const MODALITES = ["Sur place", "Hybride", "Télétravail (en ligne)"];
+export const DEBUTS = ["Immédiat", "Sous 1 mois", "Sous 3 mois"];

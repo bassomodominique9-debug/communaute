@@ -3,6 +3,7 @@ import { supabase } from "./supabaseClient";
 import { uploadFile } from "./Attachments";
 import PaymentFlow from "./PaymentFlow";
 import { SeekerCard, SeekerModal } from "./SeekerProfile";
+import { EmployerForm } from "./EmployerProfile";
 import "./lot8.css";
 
 const notify = (message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }));
@@ -95,6 +96,35 @@ function OfferCard({ offer, compact, onApply, onDeleted }) {
         <span className={offer.verified ? "job-badge job-verified" : "job-badge job-unverified"}>{offer.verified ? "✓ Vérifié" : "Non vérifié"}</span>
       </div>
       <small>{offer.company_name}{offer.location ? ` · ${offer.location}` : ""}{offer.salary_text ? ` · ${offer.salary_text}` : ""}</small>
+      {!compact && offer.profile && offer.profile.domains && (
+        <div className="skill-chips">{offer.profile.domains.map((d) => <span key={d} className="skill-chip">{d}</span>)}</div>
+      )}
+      {!compact && offer.profile && offer.profile.skills && (
+        <div className="skill-chips">{offer.profile.skills.map((k) => <span key={k} className="skill-chip skill-chip-soft">{k}</span>)}</div>
+      )}
+      {!compact && offer.profile && (
+        <dl className="seeker-facts">
+          {[
+            ["Type d'entreprise", offer.profile.company_type],
+            ["Lieu", [offer.profile.city, offer.profile.country].filter(Boolean).join(", ")],
+            ["Modalité", offer.profile.modality],
+            ["Contrat", offer.profile.contract],
+            ["Niveau requis", offer.profile.niveau],
+            ["Expérience", offer.profile.experience],
+            ["Langues", [offer.profile.langues?.fr && `Français ${offer.profile.langues.fr}`, offer.profile.langues?.en && `Anglais ${offer.profile.langues.en}`].filter(Boolean).join(" · ")],
+            ["Postes", offer.profile.positions],
+            ["Début", offer.profile.start],
+          ].filter(([, v]) => v && v !== "").map(([label, value]) => (
+            <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
+          ))}
+        </dl>
+      )}
+      {!compact && offer.profile && offer.profile.presentation && (
+        <div className="seeker-block"><b>Présentation de l'entreprise</b><p>{offer.profile.presentation}</p></div>
+      )}
+      {!compact && offer.profile && offer.profile.website && (
+        <a className="top-learner-link" href={offer.profile.website} target="_blank" rel="noopener noreferrer">Voir le site de l'entreprise</a>
+      )}
       {!compact && offer.requirements && <p><b>Critères requis :</b> {offer.requirements}</p>}
       {!compact && offer.shared_info && <p>{offer.shared_info}</p>}
       {!compact && (
@@ -127,58 +157,8 @@ function Modal({ title, onClose, children }) {
 }
 
 function RecruiterModal({ onClose }) {
-  const blank = { company: "", contact: "", title: "", location: "", salary: "", requirements: "", shared: "" };
-  const [f, setF] = useState(blank);
-  const [offerId, setOfferId] = useState(null);
-  const [busy, setBusy] = useState(false);
-  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
-
-  async function create(event) {
-    event.preventDefault();
-    if (!f.requirements.trim()) { notify("Indique les critères requis pour postuler."); return; }
-    setBusy(true);
-    const { data, error } = await supabase.rpc("create_job_offer", {
-      p_company: f.company, p_contact: f.contact, p_title: f.title, p_location: f.location,
-      p_salary: f.salary, p_requirements: f.requirements, p_shared: f.shared,
-    });
-    setBusy(false);
-    if (error) { notify(errMsg(error)); return; }
-    setOfferId(data?.offer_id);
-  }
-
-  if (offerId) return (
-    <Modal title="Paiement de l'annonce" onClose={onClose}>
-      <PaymentFlow
-        amount={2500}
-        onSubmit={async ({ transactionId, proofUrl }) => {
-          const { error } = await supabase.rpc("submit_job_payment", { p_offer: offerId, p_tx: transactionId, p_proof: proofUrl });
-          if (error) throw error;
-        }}
-        onDone={() => notify("Paiement envoyé. L'administrateur confirme, puis l'offre est publiée.")}
-        doneMessage="Paiement envoyé. L'administrateur confirme le paiement et publie ton offre. Tu seras prévenu dans tes notifications."
-      />
-    </Modal>
-  );
-
-  return (
-    <Modal title="Publier une offre d'emploi" onClose={onClose}>
-      <form className="admin-form" onSubmit={create}>
-        <p>Après remplissage, l'annonce est payée (2 500 FCFA) puis validée par l'administrateur.</p>
-        <input value={f.company} onChange={set("company")} placeholder="Nom de l'entreprise" required maxLength={120} />
-        <input value={f.contact} onChange={set("contact")} placeholder="Personne à contacter" maxLength={120} />
-        <input value={f.title} onChange={set("title")} placeholder="Intitulé du poste" required maxLength={160} />
-        <input value={f.location} onChange={set("location")} placeholder="Lieu (ville, quartier)" maxLength={160} />
-        <input value={f.salary} onChange={set("salary")} placeholder="Salaire (ex. 150 000 FCFA / mois)" maxLength={120} />
-        <textarea rows={3} value={f.requirements} onChange={set("requirements")} placeholder="Critères requis pour postuler" required maxLength={3000} />
-        <textarea rows={3} value={f.shared} onChange={set("shared")} placeholder="Ce que l'employeur partage (missions, avantages, modalités)" maxLength={3000} />
-        <button type="submit" className="button button-primary" disabled={busy}>{busy ? "Enregistrement…" : "Continuer vers le paiement"}</button>
-      </form>
-    </Modal>
-  );
+  return <EmployerForm onClose={onClose} />;
 }
-
-const TOOLS = ["Canva", "Photoshop", "Illustrator", "Lightroom", "Capture One", "Excel", "Power BI", "Word", "PowerPoint", "Autre"];
-const LEVELS = ["Débutant", "Intermédiaire", "Avancé"];
 
 function ApplyModal({ offer, onClose }) {
   const [f, setF] = useState({ full_name: "", phone: "", message: "" });
