@@ -56,6 +56,8 @@ export function BellButton() {
 // Menu secondaire : Contact, Assistance, Paramètres, Déconnexion
 export function SecondaryMenu() {
   const [open, setOpen] = useState(false);
+  const [canComm, setCanComm] = useState(false);
+  useEffect(() => { supabase.rpc("comm_my_access").then(({ data, error }) => setCanComm(!error && data === true)); }, []);
   const go = (page) => { setOpen(false); window.dispatchEvent(new CustomEvent("ed-navigate", { detail: page })); };
   async function logout() {
     setOpen(false);
@@ -68,6 +70,7 @@ export function SecondaryMenu() {
       {open && (
         <div className="sheet-backdrop" role="presentation" onClick={() => setOpen(false)}>
           <div className="sheet" role="dialog" aria-modal="true" aria-label="Menu" onClick={(e) => e.stopPropagation()}>
+            {canComm && <button type="button" className="sheet-item" onClick={() => go("communication")}>📣 Communication</button>}
             <button type="button" className="sheet-item" onClick={() => go("news")}>📰 Actualités</button>
             <button type="button" className="sheet-item" onClick={() => go("atelier")}>🧭 Ateliers</button>
             <button type="button" className="sheet-item" onClick={() => go("messages")}>✉ Messagerie</button>
@@ -81,5 +84,30 @@ export function SecondaryMenu() {
         </div>
       )}
     </>
+  );
+}
+
+// Icône messagerie dans la barre du haut : messages non lus, accessible depuis toutes les pages
+export function MessageButton() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    let active = true;
+    async function load() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { count: n, error } = await supabase.from("messages").select("id", { count: "exact", head: true })
+        .eq("recipient_id", user.id).is("read_at", null);
+      if (active && !error) setCount(n || 0);
+    }
+    load();
+    const timer = setInterval(load, 60000);
+    return () => { active = false; clearInterval(timer); };
+  }, []);
+  return (
+    <button type="button" className="bell-button message-button" aria-label={`Messagerie${count ? `, ${count} non lu(s)` : ""}`}
+      onClick={() => window.dispatchEvent(new CustomEvent("ed-navigate", { detail: "messages" }))}>
+      <span aria-hidden="true">✉</span>
+      {count > 0 && <span className="bell-badge">{count > 99 ? "99+" : count}</span>}
+    </button>
   );
 }

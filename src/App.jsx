@@ -18,7 +18,7 @@ import { JobsHome, JobsPage } from "./JobsSection";
 import SchoolButton from "./SchoolButton";
 import { useCourseCatalog } from "./CourseCatalog";
 import CatalogPhoto, { CatalogsHome } from "./CatalogPhoto";
-import { BottomNav, BellButton, SecondaryMenu } from "./BottomNav";
+import { BottomNav, BellButton, SecondaryMenu, MessageButton } from "./BottomNav";
 import { focusTarget } from "./deepLink";
 import PendingReferral from "./PendingReferral";
 import { HeaderBalance } from "./ReferralBadge";
@@ -54,8 +54,9 @@ const BRAND = {
   description:
     "Un centre dédié à l'apprentissage pratique, au développement des compétences et à l'accompagnement vers l'entrepreneuriat.",
   email: "edbusinesscenter@gmail.com",
-  phone: "+237 690 418 794",
-  whatsapp: "https://wa.me/237690418794",
+  phone: "+237 653 99 39 68",
+  whatsapp: "https://wa.me/237653993968",
+  whatsappQr: "https://wa.me/qr/PQX3V3R25C3YI1",
   facebook:
     "https://www.facebook.com/profile.php?id=61595517983213",
   instagram:
@@ -67,7 +68,7 @@ const SOCIALS = [
   {
     name: "WhatsApp",
     image: "logo-ed-b-center.png",
-    url: BRAND.whatsapp,
+    url: BRAND.whatsappQr,
     description: "Contacter l'équipe ED BUSINESS CENTER sur WhatsApp",
   },
   {
@@ -450,7 +451,7 @@ function Header({
           </span>
         </button>
 
-        <span className="header-tools"><HeaderBalance /><BellButton /><SecondaryMenu /></span>
+        <span className="header-tools"><HeaderBalance /><MessageButton /><BellButton /><SecondaryMenu /></span>
 
         <button
           className="mobile-menu-button"
@@ -605,7 +606,7 @@ function MotivationCarousel() {
           <div className="motivation-actions">
             <a
               className="button button-light"
-              href={BRAND.whatsapp}
+              href={BRAND.whatsappQr}
               target="_blank"
               rel="noreferrer"
             >
@@ -1195,14 +1196,14 @@ function ContactSection() {
 
             <div>
               <strong>Téléphone</strong>
-              <a href="tel:+237690418794">
+              <a href="tel:+237653993968">
                 {BRAND.phone}
               </a>
             </div>
           </div>
 
           <a
-            href={BRAND.whatsapp}
+            href={BRAND.whatsappQr}
             className="button button-whatsapp"
             target="_blank"
             rel="noreferrer"
