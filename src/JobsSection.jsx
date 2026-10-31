@@ -89,7 +89,7 @@ function OfferCard({ offer, compact, onApply, onDeleted }) {
     setText(""); setAsking(false); notify("Ton message a été envoyé à l'employeur.");
   }
   return (
-    <article className="account-content-card job-card" data-focus={`job:${offer.id}`}>
+    <article className="account-content-card job-card">
       <div className="job-head">
         <strong>{offer.title}</strong>
         <span className={offer.verified ? "job-badge job-verified" : "job-badge job-unverified"}>{offer.verified ? "✓ Vérifié" : "Non vérifié"}</span>
