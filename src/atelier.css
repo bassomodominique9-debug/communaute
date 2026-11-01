@@ -1,0 +1,5 @@
+.atelier-teaser { display: grid; gap: 8px; padding: 16px; border-radius: 20px; background: linear-gradient(135deg, #0a2e7a, #1677ff); color: #fff; }
+.atelier-teaser h2 { color: #fff; font-size: 1.1rem; margin: 2px 0 0; }
+.atelier-teaser p { color: rgba(255,255,255,.85); font-size: .9rem; line-height: 1.4; margin: 0; }
+.atelier-teaser .eyebrow { background: rgba(232,184,74,.2); color: #E8B84A; width: fit-content; }
+.atelier-teaser-btn { justify-self: start; background: #E8B84A; color: #0A2E7A; box-shadow: none; }

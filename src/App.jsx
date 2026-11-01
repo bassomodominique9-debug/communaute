@@ -20,6 +20,7 @@ import { useCourseCatalog } from "./CourseCatalog";
 import CatalogPhoto, { CatalogsHome } from "./CatalogPhoto";
 import { BottomNav, BellButton, SecondaryMenu, MessageButton } from "./BottomNav";
 import { focusTarget } from "./deepLink";
+import AtelierTeaser from "./AtelierTeaser";
 import PendingReferral from "./PendingReferral";
 import { HeaderBalance } from "./ReferralBadge";
 import ReferralPanel from "./ReferralPanel";
@@ -2982,6 +2983,8 @@ return (
             </HomeGate>
 
             <HomeGate section="catalogs"><CatalogsHome /></HomeGate>
+
+            <HomeGate section="ateliers"><AtelierTeaser /></HomeGate>
 
             <HomeGate section="jobs"><JobsHome /></HomeGate>
 
