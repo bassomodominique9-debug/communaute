@@ -21,6 +21,7 @@ import CatalogPhoto, { CatalogsHome } from "./CatalogPhoto";
 import { BottomNav, BellButton, SecondaryMenu, MessageButton } from "./BottomNav";
 import { focusTarget } from "./deepLink";
 import AtelierTeaser from "./AtelierTeaser";
+import AccountCatalog from "./AccountCatalog";
 import PendingReferral from "./PendingReferral";
 import { HeaderBalance } from "./ReferralBadge";
 import ReferralPanel from "./ReferralPanel";
@@ -1977,6 +1978,7 @@ function AccountSection({
         <div className="account-main">
           {activeTab === "overview" && (
             <div className="account-tab-content">
+              <AccountCatalog role={role} onOpen={setActiveTab} />
               <div className="account-section-title">
                 <div>
                   <span className="eyebrow">TABLEAU DE BORD</span>
