@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import "./community-lot1.css";
 import { supabase } from "./supabaseClient";
 import { uploadFile } from "./Attachments";
 import PaymentFlow from "./PaymentFlow";
@@ -54,6 +55,7 @@ export function JobsPage() {
   return (
     <section className="section-container jobs-page">
       <span className="eyebrow">JOBS</span>
+      <div className="community-warning">⚠ Aucune entreprise ne vous demandera de l'argent pour un travail. Soyez vigilants : signalez-nous tout doute.</div>
       <h1>Emplois</h1>
       <div className="jobs-home-buttons">
         <button type="button" className="button button-primary" onClick={() => setModal("recruiter")}>Publier une offre</button>

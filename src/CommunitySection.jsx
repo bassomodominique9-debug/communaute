@@ -1,4 +1,5 @@
 import { AuthorAvatar, AuthorBadge } from "./AuthorBadge";
+import "./community-lot1.css";
 import ReportDialog from "./ReportDialog";
 import { AttachmentList, AttachmentPicker } from "./Attachments";
 import { useEffect, useState } from "react";
@@ -14,6 +15,7 @@ function CommunitySection({ user, profile, role, onNotify, onPointsUpdated }) {
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(null);
   const [newTitle, setNewTitle] = useState("");
+  const [composerOpen, setComposerOpen] = useState(false);
   const [newBody, setNewBody] = useState("");
   const [newImageUrl, setNewImageUrl] = useState("");
   const [creating, setCreating] = useState(false);
@@ -122,6 +124,14 @@ function CommunitySection({ user, profile, role, onNotify, onPointsUpdated }) {
         <div><span className="eyebrow">LA COMMUNAUTÉ ED B-CENTER</span><h1>Communauté</h1><p>Découvre les publications, réagis et échange avec les autres membres.</p></div>
         <div className="community-points" title="Ton total de points"><span>★</span><strong>{Number(profile?.points || 0)}</strong><small>POINTS</small></div>
       </div>
+      {user && !composerOpen && (
+        <div className="composer-bar">
+          <button type="button" className="composer-input" onClick={() => setComposerOpen(true)}>Publier dans la communauté…</button>
+          <button type="button" className="composer-photo" aria-label="Importer une photo" onClick={() => setComposerOpen(true)}>📷</button>
+        </div>
+      )}
+      {!user && <p className="composer-login">Connecte-toi pour publier dans la communauté.</p>}
+      {user && composerOpen && <form className="community-create-form" onSubmit={createPost}><button type="button" className="composer-close" onClick={() => setComposerOpen(false)}>Fermer</button><h2>Partager avec la communauté</h2><label>Titre (facultatif)<input value={newTitle} onChange={(e) => setNewTitle(e.target.value)} maxLength={180} placeholder="Le titre de ta publication" /></label><label>Ton message<textarea value={newBody} onChange={(e) => setNewBody(e.target.value)} required maxLength={5000} rows={4} placeholder="Partage une idée, une expérience ou une question…" /></label><AttachmentPicker user={user} value={files} onChange={setFiles} full={isStaff} onNotify={onNotify} /><button className="button button-primary" type="submit" disabled={creating}>{creating ? "Publication…" : "Publier"}</button></form>}
       <img className="community-interface-preview" src={imageUrl("banniere-communaute-ed-b-center.png")} alt="Aperçu de l'espace Communauté" loading="lazy" />
       <div className="points-explainer">★ Une publication = un point maximum par compte. Aimer et commenter la même publication ne donne pas de deuxième point.</div>
       <div className="community-guides">
@@ -129,7 +139,7 @@ function CommunitySection({ user, profile, role, onNotify, onPointsUpdated }) {
         <article><img src={imageUrl("publication-communaute-02-interagir-et-commenter.png")} alt="Interagir et commenter" loading="lazy"/><h2>Interagir et commenter</h2><p>Connecte-toi pour aimer une publication ou ajouter un commentaire.</p></article>
         <article><img src={imageUrl("publication-communaute-03-profils-et-abonnements.png")} alt="Profils et abonnements" loading="lazy"/><h2>Découvrir les membres</h2><p>Explore les profils publics et les possibilités de suivi disponibles.</p></article>
       </div>
-      {user && <form className="community-create-form" onSubmit={createPost}><h2>Partager avec la communauté</h2><label>Titre (facultatif)<input value={newTitle} onChange={(e) => setNewTitle(e.target.value)} maxLength={180} placeholder="Le titre de ta publication" /></label><label>Ton message<textarea value={newBody} onChange={(e) => setNewBody(e.target.value)} required maxLength={5000} rows={4} placeholder="Partage une idée, une expérience ou une question…" /></label><AttachmentPicker user={user} value={files} onChange={setFiles} full={isStaff} onNotify={onNotify} /><button className="button button-primary" type="submit" disabled={creating}>{creating ? "Publication…" : "Publier"}</button></form>}
+
       {loading ? <div className="community-empty">Chargement des publications…</div> : posts.length === 0 ? (
         <div className="community-empty"><img src={imageUrl("illustration-conversation-vide.png")} alt="Aucune publication pour le moment" loading="lazy" /><h2>Aucune publication pour le moment</h2><p>Les publications publiées par l’équipe apparaîtront ici.</p></div>
       ) : <div className="publication-list">{posts.map((post) => {
@@ -141,7 +151,7 @@ function CommunitySection({ user, profile, role, onNotify, onPointsUpdated }) {
           {post.title && <h2>{post.title}</h2>}<p className="publication-body">{post.body}</p>
           {post.image_url && <img className="publication-image" src={post.image_url} alt={post.title || "Publication ED B-CENTER"} loading="lazy" />}<AttachmentList items={post.attachments} />
           <div className="publication-stats"><span>♥ {interactions.filter((r) => r.interaction_type === "like").length} J’aime</span><span>▢ {postComments.length} commentaire(s)</span></div>
-          <div className="publication-actions"><button type="button" className={liked ? "publication-action liked" : "publication-action"} disabled={sending === post.id + "like"} onClick={() => interact(post.id, "like")}>{liked ? "♥ Aimé" : "♡ J’aime"}</button><span className="publication-action-divider"/><label className="publication-comment-label" htmlFor={`comment-${post.id}`}>Commenter</label>{user?.id === post.author_id && <button type="button" className="publication-action publication-delete-action" onClick={() => deletePost(post)}>Supprimer</button>}{user && user.id !== post.author_id && <button type="button" className="publication-action publication-report-action" onClick={() => setReporting(post)}>Signaler</button>}</div>{reporting?.id === post.id && <ReportDialog post={post} onClose={() => setReporting(null)} onNotify={onNotify} />}
+          <div className="publication-actions"><button type="button" className={liked ? "publication-action liked" : "publication-action"} disabled={sending === post.id + "like"} onClick={() => interact(post.id, "like")}>{liked ? "♥ Aimé" : "♡ J’aime"}</button><span className="publication-action-divider"/><label className="publication-comment-label" htmlFor={`comment-${post.id}`}>Commenter</label>{user?.id === post.author_id && <button type="button" className="publication-action publication-delete-action" onClick={() => deletePost(post)}>Supprimer</button>}{user && user.id !== post.author_id && <button type="button" className="publication-action publication-report-action" onClick={() => window.open(`https://wa.me/237653993968?text=${encodeURIComponent("Signalement — publication « " + (post.title || post.content?.slice(0, 60) || "sans titre") + " » (réf. " + post.id + ") : ")}`, "_blank", "noopener,noreferrer")}>Signaler</button>}</div>{reporting?.id === post.id && <ReportDialog post={post} onClose={() => setReporting(null)} onNotify={onNotify} />}
           {postComments.map((c) => <div className="publication-comment" key={`${c.user_id}-${c.created_at}-${c.content}`}><strong style={c.user_id === user?.id ? undefined : { cursor: "pointer" }} onClick={() => c.user_id !== user?.id && window.dispatchEvent(new CustomEvent("ed-open-profile", { detail: c.user_id }))}>{c.user_id === user?.id ? "Vous" : (post.cards?.[c.user_id]?.full_name || "Membre")}</strong><p>{c.content}</p></div>)}
           <form className="publication-comment-form" onSubmit={(e) => { e.preventDefault(); interact(post.id, "comment"); }}><input id={`comment-${post.id}`} value={comments[post.id] || ""} onChange={(e) => setComments((prev) => ({ ...prev, [post.id]: e.target.value }))} placeholder="Écrire un commentaire…" maxLength={1000}/><button className="button button-primary" disabled={sending === post.id + "comment"}>Envoyer</button></form>
         </article>;
