@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { LearnerSpaceEntry } from "./FormationsLot3";
 import { supabase } from "./supabaseClient";
 import { imageUrl } from "./imageCatalog";
 import CommunitySection from "./CommunitySection";
@@ -907,7 +908,7 @@ function ServicesSection({ onNavigate, onSelectService }) {
    SECTION DES FORMATIONS
 ===================================================== */
 
-function CoursesSection({ onRegister, onNavigate }) {
+function CoursesSection({ onRegister, onNavigate, role }) {
   const courses = useCourseCatalog(COURSES);
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Toutes");
@@ -1083,6 +1084,11 @@ function CoursesSection({ onRegister, onNavigate }) {
           Poser une question
         </button>
       </div>
+      <LearnerSpaceEntry
+        role={role}
+        onOpen={() => { window.__edPendingAccountTab = "learning"; onNavigate("account"); }}
+        onDenied={() => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: "Cet espace est réservé aux apprenants inscrits." }))}
+      />
     </section>
   );
 }
@@ -1806,7 +1812,11 @@ function AccountSection({
   onEditProfile,
   onPlatformStatusChange,
 }) {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState(() => {
+    const pending = window.__edPendingAccountTab;
+    window.__edPendingAccountTab = null;
+    return pending || "overview";
+  });
 
   const displayName =
     profile?.full_name ||
@@ -2913,6 +2923,7 @@ return (
               <CoursesSection
                 onRegister={openRegister}
                 onNavigate={navigateTo}
+                role={role}
               />
             </HomeGate>
 
@@ -2973,6 +2984,7 @@ return (
           <CoursesSection
             onRegister={openRegister}
             onNavigate={navigateTo}
+            role={role}
           />
         )}
 

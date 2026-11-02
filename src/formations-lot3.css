@@ -1,0 +1,11 @@
+/* Formations : la liste défile horizontalement, comme les catalogues (mobile) */
+@media (max-width: 1179px) {
+  .courses-grid { display: flex !important; gap: 12px; overflow-x: auto; padding: 4px 16px 12px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .courses-grid::-webkit-scrollbar { display: none; }
+  .courses-grid > .course-card { flex: 0 0 78vw; max-width: 78vw; scroll-snap-align: start; }
+}
+.learner-entry { display: grid; gap: 8px; margin: 18px 16px 8px; padding: 18px; border-radius: 20px; background: linear-gradient(135deg, var(--ed-blue-night), var(--ed-blue)); color: #fff; }
+.learner-entry h2 { color: #fff; font-size: 1.1rem; margin: 2px 0 0; }
+.learner-entry p { color: rgba(255,255,255,.88); font-size: .9rem; line-height: 1.45; margin: 0; }
+.learner-entry .button-primary { justify-self: start; background: #E8B84A; color: var(--ed-blue-night); box-shadow: none; }
+.learner-entry-note { color: rgba(255,255,255,.8); font-size: .8rem; }
