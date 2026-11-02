@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PortfolioStaff from "./PortfolioStaff";
 import { LearnerSpaceEntry } from "./FormationsLot3";
 import { supabase } from "./supabaseClient";
 import { imageUrl } from "./imageCatalog";
@@ -2089,7 +2090,7 @@ function AccountSection({
               </div>
               {role === "apprenant"
                 ? <Parcours user={user} onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} />
-                : <ParcoursManager user={user} role={role} onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} />}
+                : <><PortfolioStaff /><ParcoursManager user={user} role={role} onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} /></>}
             </div>
           )}
 
