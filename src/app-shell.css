@@ -156,3 +156,5 @@
     margin: 0 !important; margin-top: auto !important; width: 100% !important; align-self: stretch !important;
   }
 }
+.admin-tabs-hidden { display: none !important; }
+.sub-hub { display: grid; gap: 4px; }

@@ -24,8 +24,8 @@ const TABS = [
 const STATUS = { new: "Nouvelle", contacted: "Contactée", enrolled: "Inscrite", cancelled: "Annulée" };
 const missing = "Installe le SQL « partie 9 » dans Supabase.";
 
-export default function AdminSpace({ user, catalog, onNotify }) {
-  const [tab, setTab] = useState("stats");
+export default function AdminSpace({ user, catalog, onNotify, initialTab, hideTabs }) {
+  const [tab, setTab] = useState(initialTab || "stats");
   const [stats, setStats] = useState(null);
   const [regs, setRegs] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -93,7 +93,7 @@ export default function AdminSpace({ user, catalog, onNotify }) {
       <div className="account-section-title">
         <div><span className="eyebrow">GESTION DE LA PLATEFORME</span><h2>Administration</h2></div>
       </div>
-      <div className="admin-tabs" role="tablist">
+      <div className={hideTabs ? "admin-tabs admin-tabs-hidden" : "admin-tabs"} role="tablist">
         {TABS.map(([id, label]) => (
           <button key={id} type="button" role="tab" aria-selected={tab === id} className={tab === id ? "admin-tab admin-tab-active" : "admin-tab"} onClick={() => setTab(id)}>{label}</button>
         ))}

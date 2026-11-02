@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 import { imageUrl } from "./imageCatalog";
 
-export default function CoordinatorPanel({ onNotify, onStatusChange }) {
+export default function CoordinatorPanel({ onNotify, onStatusChange, view }) {
   const [authorized, setAuthorized] = useState(false);
   const [checking, setChecking] = useState(true);
   const [settings, setSettings] = useState(null);
@@ -78,11 +78,15 @@ export default function CoordinatorPanel({ onNotify, onStatusChange }) {
 
   return <section className="coordinator-panel">
     <div className="coordinator-heading"><span className="eyebrow">ACCÈS PRIVILÉGIÉ</span><h2>Centre de contrôle du coordinateur</h2><p>Les actions sensibles sont vérifiées par des fonctions sécurisées dans Supabase.</p></div>
+    {(!view || view === "status") && (<>
     <div className="coordinator-status-grid"><article><span>État de l'application</span><strong>{settings?.maintenance_mode ? "Fermée" : "Ouverte"}</strong></article><article><span>Mode maintenance</span><strong>{settings?.maintenance_mode ? "Activé" : "Désactivé"}</strong></article></div>
     <div className="coordinator-action-row"><label htmlFor="maintenance-message">Message affiché aux utilisateurs</label><input id="maintenance-message" value={message} onChange={(event) => setMessage(event.target.value)} maxLength={300} placeholder="APPLICATION FERMÉE — maintenance en cours"/><button type="button" className="button button-primary" disabled={Boolean(busy)} onClick={() => runAction("coordinator_set_maintenance", { p_enabled: !settings?.maintenance_mode, p_message: (message.trim() || "APPLICATION FERMÉE — maintenance en cours") })}>{busy ? "Traitement…" : settings?.maintenance_mode ? "Réouvrir l'application" : "Fermer l'application"}</button></div>
     <div className="coordinator-security-note"><strong>Limite de sécurité importante</strong><p>Le mode maintenance masque l'application côté interface. Il ne désactive pas à lui seul l'accès direct à Supabase ou aux dépôts GitHub. Les autorisations RLS, les clés et les accès aux comptes doivent rester protégés séparément.</p></div>
+    </>)}
+    {(!view || view === "users") && (<>
     <div className="coordinator-users-heading"><div><span className="eyebrow">COMPTES ET AUTORISATIONS</span><h3>Gestion des utilisateurs</h3></div><button type="button" className="button button-outline" onClick={loadUsers} disabled={loadingUsers}>{loadingUsers ? "Actualisation…" : "Actualiser"}</button></div>
     {loadingUsers && users.length === 0 ? <p>Chargement des comptes…</p> : users.length === 0 ? <p>Aucun compte à afficher ou la fonction SQL n'est pas disponible.</p> : <div className="coordinator-users-list">{users.map((item) => <article className="coordinator-user-card" key={item.id}><div className="coordinator-user-info"><strong>{item.full_name || "Utilisateur"}</strong><span>{item.email || item.id}</span><small>Rôle : {item.role || "client"} · {item.is_banned ? "Compte bloqué" : "Compte actif"}</small></div><div className="coordinator-user-actions"><label className="sr-only" htmlFor={`role-${item.id}`}>Rôle de {item.full_name || item.email}</label><select id={`role-${item.id}`} value={item.role || "client"} onChange={(event) => updateRole(item, event.target.value)} disabled={Boolean(busy) || item.is_coordinator}><option value="client">Client</option><option value="apprenant">Apprenant</option><option value="trainer">Formateur</option><option value="admin">Administrateur</option></select><button type="button" className="button button-outline" onClick={() => toggleBan(item)} disabled={Boolean(busy) || item.is_coordinator}>{item.is_banned ? "Réactiver" : "Bannir"}</button><button type="button" className="button button-danger" onClick={() => deleteUser(item)} disabled={Boolean(busy) || item.is_coordinator}>Supprimer</button></div></article>)}</div>}
     <p className="coordinator-footnote">Le compte coordinateur principal ne peut pas être modifié, banni ou supprimé depuis cette interface.</p>
+    </>)}
   </section>;
 }

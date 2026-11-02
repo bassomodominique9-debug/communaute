@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AdminHub, TrainerHub, CoordHub } from "./SubHub";
 import { AttestationAdmin, MyAttestations } from "./Attestations";
 import PortfolioStaff from "./PortfolioStaff";
 import { LearnerSpaceEntry } from "./FormationsLot3";
@@ -2091,7 +2092,7 @@ function AccountSection({
               </div>
               {role === "apprenant"
                 ? <Parcours user={user} onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} />
-                : <><PortfolioStaff /><ParcoursManager user={user} role={role} onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} /></>}
+                : <TrainerHub user={user} role={role} onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} />}
             </div>
           )}
 
@@ -2135,7 +2136,7 @@ function AccountSection({
           {activeTab === "trainer" && (role === "trainer" || role === "admin") && (
             <div className="account-tab-content">
               <div className="account-section-title"><div><span className="eyebrow">SUIVI DES APPRENANTS</span><h2>Espace formateur</h2></div></div>
-              <ParcoursManager user={user} role={role} onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} />
+              <TrainerHub user={user} role={role} onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} />
             </div>
           )}
 
@@ -2169,12 +2170,12 @@ function AccountSection({
 
           {activeTab === "coordinator" && (
             <div className="account-tab-content">
-              <CoordinatorPanel onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} onStatusChange={onPlatformStatusChange} />
+              <CoordHub onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} onStatusChange={onPlatformStatusChange} />
             </div>
           )}
 
           {activeTab === "admin" && (role === "admin" || role === "trainer") && (
-            <AdminSpace user={user} catalog={{ courses: COURSES.map((c) => ({ key: c.id, label: c.title, price: c.price, old: c.oldPrice })), services: SERVICES.map((s) => ({ key: s.id, label: s.name, text: s.price || "" })) }} onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} />
+            <AdminHub user={user} catalog={{ courses: COURSES.map((c) => ({ key: c.id, label: c.title, price: c.price, old: c.oldPrice })), services: SERVICES.map((s) => ({ key: s.id, label: s.name, text: s.price || "" })) }} onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} />
           )}
         </div>
       </div>
