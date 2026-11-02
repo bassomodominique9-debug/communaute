@@ -1870,114 +1870,15 @@ function AccountSection({
             </span>
           </div>
 
-          <nav
-            className="account-navigation"
-            aria-label="Menu personnel"
-          >
-            <button
-              type="button"
-              className={
-                activeTab === "overview" ? "account-nav-active" : ""
-              }
-              onClick={() => setActiveTab("overview")}
-            >
-              <span aria-hidden="true">⌂</span>
-              Vue d'ensemble
-            </button>
 
-            <button
-              type="button"
-              className={
-                activeTab === "profile" ? "account-nav-active" : ""
-              }
-              onClick={() => setActiveTab("profile")}
-            >
-              <span aria-hidden="true">◉</span>
-              Mon profil
-            </button>
-
-            <button
-              type="button"
-              className={
-                activeTab === "courses" ? "account-nav-active" : ""
-              }
-              onClick={() => setActiveTab("courses")}
-            >
-              <span aria-hidden="true">▤</span>
-              Formations
-            </button>
-
-            <button
-              type="button"
-              className={
-                activeTab === "messages" ? "account-nav-active" : ""
-              }
-              onClick={() => setActiveTab("messages")}
-            >
-              <span aria-hidden="true">✉</span>
-              Messagerie
-            </button>
-
-
-            {role === "apprenant" && (
-              <button type="button" className={activeTab === "learner" ? "account-nav-active" : ""} onClick={() => setActiveTab("learner")}>
-                <span aria-hidden="true">★</span>
-                Mon parcours
-              </button>
-            )}
-            {(role === "trainer" || role === "admin") && (
-              <button type="button" className={activeTab === "trainer" ? "account-nav-active" : ""} onClick={() => setActiveTab("trainer")}>
-                <span aria-hidden="true">✎</span>
-                Espace formateur
-              </button>
-            )}
-
-            {["apprenant", "trainer", "admin"].includes(role) && (
-              <button
-                type="button"
-                className={activeTab === "learning" ? "account-nav-active" : ""}
-                onClick={() => setActiveTab("learning")}
-              >
-                <span aria-hidden="true">✎</span>
-                {role === "apprenant" ? "Mon parcours" : "Apprenants"}
-              </button>
-            )}
-
-            {(role === "admin" || role === "trainer") && (
-              <button
-                type="button"
-                className={
-                  activeTab === "admin" ? "account-nav-active" : ""
-                }
-                onClick={() => setActiveTab("admin")}
-              >
-                <span aria-hidden="true">⚙</span>
-                Administration
-              </button>
-            )}
-
-            <button
-              type="button"
-              className={activeTab === "coordinator" ? "account-nav-active" : ""}
-              onClick={() => setActiveTab("coordinator")}
-            >
-              <span aria-hidden="true">🛡</span>
-              Sécurité plateforme
-            </button>
-          </nav>
-
-          <button
-            type="button"
-            className="account-logout-button"
-            onClick={onLogout}
-          >
-            ↪ Déconnexion
-          </button>
         </aside>
 
         <div className="account-main">
+          {activeTab !== "overview" && (
+            <button type="button" className="account-back" onClick={() => setActiveTab("overview")}>‹ Retour aux options</button>
+          )}
           {activeTab === "overview" && (
-            <div className="account-tab-content">
+            <div className="account-tab-content account-overview">
               <AccountCatalog role={role} onOpen={setActiveTab} />
               <div className="account-section-title">
                 <div>
@@ -2179,6 +2080,24 @@ function AccountSection({
               {role === "apprenant"
                 ? <Parcours user={user} onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} />
                 : <ParcoursManager user={user} role={role} onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} />}
+            </div>
+          )}
+
+          {activeTab === "ateliers" && (
+            <div className="account-tab-content">
+              <AtelierSection user={user} profile={profile} role={role} onNotify={(message) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: message }))} />
+            </div>
+          )}
+
+          {activeTab === "referral" && (
+            <div className="account-tab-content">
+              <ReferralPanel />
+            </div>
+          )}
+
+          {activeTab === "jobs" && (
+            <div className="account-tab-content">
+              <JobsPage />
             </div>
           )}
 

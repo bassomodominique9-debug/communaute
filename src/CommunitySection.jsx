@@ -16,6 +16,18 @@ function CommunitySection({ user, profile, role, onNotify, onPointsUpdated }) {
   const [sending, setSending] = useState(null);
   const [newTitle, setNewTitle] = useState("");
   const [composerOpen, setComposerOpen] = useState(false);
+
+  const openComposer = () => {
+    setComposerOpen(true);
+    setTimeout(() => {
+      const form = document.querySelector(".community-create-form");
+      if (!form) return;
+      const rect = form.getBoundingClientRect();
+      if (rect.top < 0 || rect.top > window.innerHeight * 0.4) form.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      const field = form.querySelector("input, textarea");
+      if (field) field.focus({ preventScroll: true });
+    }, 60);
+  };
   const [newBody, setNewBody] = useState("");
   const [newImageUrl, setNewImageUrl] = useState("");
   const [creating, setCreating] = useState(false);
@@ -80,7 +92,7 @@ function CommunitySection({ user, profile, role, onNotify, onPointsUpdated }) {
       onNotify?.("Impossible de publier. Vérifie la migration et les autorisations Supabase.");
       return;
     }
-    setNewTitle(""); setNewBody(""); setNewImageUrl("");
+    setNewTitle(""); setNewBody(""); setNewImageUrl(""); setComposerOpen(false);
     onNotify?.("Publication ajoutée à la communauté.");
     await loadPosts();
   }
@@ -126,8 +138,8 @@ function CommunitySection({ user, profile, role, onNotify, onPointsUpdated }) {
       </div>
       {user && !composerOpen && (
         <div className="composer-bar">
-          <button type="button" className="composer-input" onClick={() => setComposerOpen(true)}>Publier dans la communauté…</button>
-          <button type="button" className="composer-photo" aria-label="Importer une photo" onClick={() => setComposerOpen(true)}>📷</button>
+          <button type="button" className="composer-input" onClick={openComposer}>Publier dans la communauté…</button>
+          <button type="button" className="composer-photo" aria-label="Importer une photo" onClick={openComposer}>📷</button>
         </div>
       )}
       {!user && <p className="composer-login">Connecte-toi pour publier dans la communauté.</p>}

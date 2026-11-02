@@ -1,7 +1,6 @@
 import "./account-catalog.css";
 
 // Catalogue de « Mon espace » : seulement les options accessibles au rôle du compte
-const go = (page) => window.dispatchEvent(new CustomEvent("ed-navigate", { detail: page }));
 
 export default function AccountCatalog({ role, onOpen }) {
   const isAdmin = role === "admin";
@@ -12,9 +11,9 @@ export default function AccountCatalog({ role, onOpen }) {
     { key: "profile", icon: "👤", title: "Mon profil", sub: "Informations et photo", open: () => onOpen("profile") },
     { key: "messages", icon: "✉", title: "Messagerie", sub: "Tes conversations", open: () => onOpen("messages") },
     { key: "courses", icon: "▤", title: "Formations", sub: "Inscriptions et programmes", open: () => onOpen("courses") },
-    { key: "ateliers", icon: "🧭", title: "Mes ateliers", sub: "Réservations et tickets", open: () => go("atelier") },
-    { key: "referral", icon: "🎁", title: "Parrainage", sub: "Code, gains et retraits", open: () => go("referral") },
-    { key: "jobs", icon: "⌘", title: "Emploi", sub: "Offres et profil candidat", open: () => go("jobs") },
+    { key: "ateliers", icon: "🧭", title: "Mes ateliers", sub: "Réservations et tickets", open: () => onOpen("ateliers") },
+    { key: "referral", icon: "🎁", title: "Parrainage", sub: "Code, gains et retraits", open: () => onOpen("referral") },
+    { key: "jobs", icon: "⌘", title: "Emploi", sub: "Offres et profil candidat", open: () => onOpen("jobs") },
     ...(isLearner ? [{ key: "learner", icon: "★", title: "Mon parcours", sub: "Exercices, notes, modules", open: () => onOpen("learner") }] : []),
     ...(isTrainer ? [{ key: "trainer", icon: "✎", title: "Espace formateur", sub: "Promotions et suivi", open: () => onOpen("trainer") }] : []),
     ...(isAdmin ? [{ key: "admin", icon: "⚙", title: "Administration", sub: "Gestion de la plateforme", open: () => onOpen("admin") }] : []),

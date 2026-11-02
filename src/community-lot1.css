@@ -5,3 +5,8 @@
 .composer-login { margin: 10px 0; color: var(--ed-text-muted); font-size: .9rem; }
 .composer-close { display: block; margin-left: auto; min-height: 36px; padding: 0 12px; border: 0; border-radius: 10px; background: #eef4f6; font-weight: 700; }
 .community-warning { margin: 10px 0 4px; padding: 10px 12px; border-radius: 12px; background: #fff7e0; border: 1px solid #f3d27a; color: #7a5300; font-size: .85rem; line-height: 1.4; }
+
+/* Ordre : barre et formulaire juste sous l'en-tête, publications ensuite */
+.community-section > .composer-bar, .community-section > .composer-login { order: 1 !important; }
+.community-section > .community-create-form { order: 2 !important; }
+.community-section > .publication-list, .community-section > .community-empty { order: 3 !important; }
