@@ -17,6 +17,8 @@ export default function AccountCatalog({ role, onOpen }) {
     ...(isLearner ? [{ key: "learner", icon: "★", title: "Mon parcours", sub: "Exercices, notes, modules", open: () => onOpen("learner") }] : []),
     ...(isTrainer ? [{ key: "trainer", icon: "✎", title: "Espace formateur", sub: "Promotions et suivi", open: () => onOpen("trainer") }] : []),
     ...(isAdmin ? [{ key: "admin", icon: "⚙", title: "Administration", sub: "Gestion de la plateforme", open: () => onOpen("admin") }] : []),
+    ...(isLearner ? [{ key: "attestations", icon: "🏅", title: "Mes attestations", sub: "Télécharger mes attestations", open: () => onOpen("attestations") }] : []),
+    ...(isAdmin ? [{ key: "attestations-admin", icon: "✒", title: "Attestations", sub: "Émettre et envoyer", open: () => onOpen("attestations-admin") }] : []),
     ...(isAdmin ? [{ key: "coordinator", icon: "◈", title: "Coordination", sub: "Sécurité et accès", open: () => onOpen("coordinator") }] : []),
   ];
 

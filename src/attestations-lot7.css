@@ -1,0 +1,11 @@
+.attest-admin, .attest-mine { display: grid; gap: 10px; padding: 16px; margin: 12px 0; border-radius: 18px; background: #fff; border: 1px solid var(--ed-border); box-shadow: var(--ed-shadow-sm); }
+.attest-form, .attest-send { display: grid; gap: 8px; }
+.attest-form label, .attest-send label { display: grid; gap: 4px; font-size: .88rem; }
+.attest-form input, .attest-send input { min-height: 44px; padding: 0 12px; border-radius: 12px; border: 1px solid var(--ed-border); background: #f7f9fe; font-size: 16px; }
+.attest-prompt { display: grid; gap: 8px; margin-top: 8px; padding-top: 12px; border-top: 1px dashed var(--ed-border); }
+.attest-prompt textarea { padding: 10px 12px; border-radius: 12px; border: 1px solid var(--ed-border); font-size: .85rem; background: #f7f9fe; }
+.attest-send { padding: 12px; border-radius: 14px; background: #f0f5ff; }
+.attest-card { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: center; }
+.attest-card img { width: 100%; border-radius: 10px; border: 1px solid var(--ed-border); }
+.attest-card div { display: grid; gap: 6px; }
+.attest-card small, .attest-note { color: var(--ed-text-muted); font-size: .85rem; }

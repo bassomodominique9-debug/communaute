@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AttestationAdmin, MyAttestations } from "./Attestations";
 import PortfolioStaff from "./PortfolioStaff";
 import { LearnerSpaceEntry } from "./FormationsLot3";
 import { supabase } from "./supabaseClient";
@@ -2109,6 +2110,18 @@ function AccountSection({
           {activeTab === "jobs" && (
             <div className="account-tab-content">
               <JobsPage />
+            </div>
+          )}
+
+          {activeTab === "attestations-admin" && role === "admin" && (
+            <div className="account-tab-content">
+              <AttestationAdmin />
+            </div>
+          )}
+
+          {activeTab === "attestations" && role === "apprenant" && (
+            <div className="account-tab-content">
+              <MyAttestations />
             </div>
           )}
 
