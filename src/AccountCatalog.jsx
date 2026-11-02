@@ -1,8 +1,18 @@
+import { useEffect, useState } from "react";
+import { supabase } from "./supabaseClient";
 import "./account-catalog.css";
 
 // Catalogue de « Mon espace » : seulement les options accessibles au rôle du compte
 
 export default function AccountCatalog({ role, onOpen }) {
+  const [coordAccess, setCoordAccess] = useState(false);
+  useEffect(() => {
+    let active = true;
+    supabase.rpc("coordinator_get_control_state").then(({ data, error }) => {
+      if (active) setCoordAccess(!error && Boolean(data?.authorized));
+    });
+    return () => { active = false; };
+  }, []);
   const isAdmin = role === "admin";
   const isTrainer = role === "trainer" || isAdmin;
   const isLearner = role === "apprenant";
@@ -19,7 +29,7 @@ export default function AccountCatalog({ role, onOpen }) {
     ...(isAdmin ? [{ key: "admin", icon: "⚙", title: "Administration", sub: "Gestion de la plateforme", open: () => onOpen("admin") }] : []),
     ...(isLearner ? [{ key: "attestations", icon: "🏅", title: "Mes attestations", sub: "Télécharger mes attestations", open: () => onOpen("attestations") }] : []),
     ...(isAdmin ? [{ key: "attestations-admin", icon: "✒", title: "Attestations", sub: "Émettre et envoyer", open: () => onOpen("attestations-admin") }] : []),
-    ...(isAdmin ? [{ key: "coordinator", icon: "◈", title: "Coordination", sub: "Sécurité et accès", open: () => onOpen("coordinator") }] : []),
+    ...(coordAccess ? [{ key: "coordinator", icon: "◈", title: "Coordination", sub: "Sécurité et accès", open: () => onOpen("coordinator") }] : []),
   ];
 
   return (
