@@ -1,0 +1,11 @@
+.menu-backdrop { position: fixed; inset: 0; z-index: 2147483000; display: flex; align-items: flex-end; background: rgba(6, 26, 61, .45); }
+.menu-sheet { width: 100%; max-height: 80vh; overflow-y: auto; padding: 12px 14px calc(14px + env(safe-area-inset-bottom, 0px)); border-radius: 20px 20px 0 0; background: #fff; box-shadow: 0 -12px 30px rgba(11, 27, 69, .2); }
+.menu-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.menu-title { font-weight: 800; color: var(--ed-blue-night); font-size: .95rem; }
+.menu-back, .menu-close { width: 32px; height: 32px; border: 0; border-radius: 50%; background: #eef4ff; color: var(--ed-blue); font-size: 1.2rem; line-height: 1; }
+.menu-close { margin-left: auto; }
+.menu-list { display: grid; gap: 6px; }
+.menu-row { display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 0 12px; border: 0; border-radius: 12px; background: #f6f9ff; color: var(--ed-blue-night); font-weight: 700; font-size: .9rem; text-align: left; }
+.menu-row span { width: 26px; text-align: center; }
+.menu-row i { margin-left: auto; font-style: normal; color: var(--ed-blue); font-size: 1.1rem; }
+.assistant-inline { height: 60vh; min-height: 0; margin: 0; border-radius: 14px; }

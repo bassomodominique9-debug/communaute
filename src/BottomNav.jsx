@@ -1,3 +1,6 @@
+import { createPortal } from "react-dom";
+import AssistantChat from "./AssistantChat";
+import "./menu-sheet.css";
 import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 import "./design.css";
@@ -53,35 +56,42 @@ export function BellButton() {
   );
 }
 
-// Menu secondaire : Contact, Assistance, Paramètres, Déconnexion
+// Menu ⋯ : Déconnexion et Assistance, en petites lignes ; Assistance s'ouvre dans la même fenêtre
 export function SecondaryMenu() {
   const [open, setOpen] = useState(false);
+  const [view, setView] = useState("menu");
   const [canComm, setCanComm] = useState(false);
   useEffect(() => { supabase.rpc("comm_my_access").then(({ data, error }) => setCanComm(!error && data === true)); }, []);
-  const go = (page) => { setOpen(false); window.dispatchEvent(new CustomEvent("ed-navigate", { detail: page })); };
+  const close = () => { setOpen(false); setView("menu"); };
+  const go = (page) => { close(); window.dispatchEvent(new CustomEvent("ed-navigate", { detail: page })); };
   async function logout() {
-    setOpen(false);
+    close();
     await supabase.auth.signOut();
     window.location.reload();
   }
   return (
     <>
       <button type="button" className="secondary-menu-button" aria-label="Menu" aria-expanded={open} onClick={() => setOpen(true)}>⋯</button>
-      {open && (
-        <div className="sheet-backdrop" role="presentation" onClick={() => setOpen(false)}>
-          <div className="sheet" role="dialog" aria-modal="true" aria-label="Menu" onClick={(e) => e.stopPropagation()}>
-            {canComm && <button type="button" className="sheet-item" onClick={() => go("communication")}>📣 Communication</button>}
-            <button type="button" className="sheet-item" onClick={() => go("news")}>📰 Actualités</button>
-            <button type="button" className="sheet-item" onClick={() => go("atelier")}>🧭 Ateliers</button>
-            <button type="button" className="sheet-item" onClick={() => go("messages")}>✉ Messagerie</button>
-            <button type="button" className="sheet-item" onClick={() => go("notifications")}>🔔 Notifications</button>
-            <button type="button" className="sheet-item" onClick={() => go("contact")}>☎ Contact</button>
-            <button type="button" className="sheet-item" onClick={() => go("referral")}>🎁 Parrainage</button>
-            <button type="button" className="sheet-item" onClick={() => go("account")}>⚙ Paramètres</button>
-            <button type="button" className="sheet-item sheet-danger" onClick={logout}>⎋ Déconnexion</button>
-            <button type="button" className="sheet-item" onClick={() => go("assistance")}>? Assistance</button>
+      {open && createPortal(
+        <div className="menu-backdrop" role="presentation" onClick={close}>
+          <div className="menu-sheet" role="dialog" aria-modal="true" aria-label="Menu" onClick={(e) => e.stopPropagation()}>
+            <div className="menu-head">
+              {view === "menu"
+                ? <span className="menu-title">Menu</span>
+                : <button type="button" className="menu-back" aria-label="Retour" onClick={() => setView("menu")}>‹</button>}
+              <button type="button" className="menu-close" aria-label="Fermer" onClick={close}>×</button>
+            </div>
+            {view === "menu" && (
+              <div className="menu-list">
+                <button type="button" className="menu-row" onClick={logout}><span>⎋</span>Déconnexion</button>
+                <button type="button" className="menu-row" onClick={() => setView("assistant")}><span>?</span>Assistance<i>›</i></button>
+                {canComm && <button type="button" className="menu-row" onClick={() => go("communication")}><span>📣</span>Communication<i>›</i></button>}
+              </div>
+            )}
+            {view === "assistant" && <AssistantChat inline />}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

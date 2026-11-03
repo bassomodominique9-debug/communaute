@@ -34,7 +34,7 @@ const TREE = {
 // Les 5 questions d'accueil
 const START = ["create", "ateliers_book", "post", "formations_enroll", "emploi_find"];
 
-export default function AssistantChat() {
+export default function AssistantChat({ inline = false }) {
   const [messages, setMessages] = useState([
     { from: "bot", text: "Bonjour, je suis l'assistant ED B-CENTER. Choisis une question pour commencer." },
   ]);
@@ -60,7 +60,7 @@ export default function AssistantChat() {
   }
 
   return (
-    <section className="assistant" aria-label="Assistant ED B-CENTER">
+    <section className={inline ? "assistant assistant-inline" : "assistant"} aria-label="Assistant ED B-CENTER">
       <div className="assistant-head">
         <span className="assistant-avatar" aria-hidden="true">EB</span>
         <div><strong>Assistant ED B-CENTER</strong><small>Réponses rapides, sans attente</small></div>
