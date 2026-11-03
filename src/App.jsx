@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import SocialIcon from "./SocialIcon";
 import GuideApp from "./GuideApp";
 import AssistantChat from "./AssistantChat";
 import { Testimonials, AboutPage, HomeMini } from "./Marketing";
@@ -76,25 +77,25 @@ const BRAND = {
 const SOCIALS = [
   {
     name: "WhatsApp",
-    image: "logo-ed-b-center.png",
+    image: "reseau-whatsapp.png",
     url: BRAND.whatsappQr,
     description: "Contacter l'équipe ED BUSINESS CENTER sur WhatsApp",
   },
   {
     name: "Facebook",
-    image: "logo-ed-b-center.png",
+    image: "reseau-facebook.png",
     url: BRAND.facebook,
     description: "Retrouver ED BUSINESS CENTER sur Facebook",
   },
   {
     name: "Instagram",
-    image: "logo-ed-b-center.png",
+    image: "reseau-instagram.png",
     url: BRAND.instagram,
     description: "Découvrir les activités d'ED BUSINESS CENTER sur Instagram",
   },
   {
     name: "Gmail",
-    image: "logo-ed-b-center.png",
+    image: "reseau-gmail.png",
     url: `mailto:${BRAND.email}`,
     description: "Envoyer un e-mail à ED BUSINESS CENTER",
   },
@@ -1235,9 +1236,7 @@ function ContactSection() {
                 title={social.description}
                 aria-label={social.description}
               >
-                <span className={`social-fallback-mark social-${social.name.toLowerCase()}`} aria-hidden="true">
-                  {social.name === "WhatsApp" ? "WA" : social.name === "Facebook" ? "f" : social.name === "Instagram" ? "◎" : "@"}
-                </span>
+                <SocialIcon social={social} />
               </a>
             ))}
           </div>
@@ -3131,9 +3130,7 @@ return (
                 aria-label={social.description}
                 title={social.name}
               >
-                <span className={`social-fallback-mark social-${social.name.toLowerCase()}`} aria-hidden="true">
-                  {social.name === "WhatsApp" ? "WA" : social.name === "Facebook" ? "f" : social.name === "Instagram" ? "◎" : "@"}
-                </span>
+                <SocialIcon social={social} />
               </a>
             ))}
           </div>
