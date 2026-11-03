@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import GuideApp from "./GuideApp";
 import AssistantChat from "./AssistantChat";
 import { ProfileProgress, Onboarding, Testimonials, OrderSteps, Faq, AboutPage } from "./Marketing";
 import { AdminHub, TrainerHub, CoordHub } from "./SubHub";
@@ -2938,6 +2939,7 @@ return (
             <HomeGate section="onboarding"><OrderSteps /></HomeGate>
             <HomeGate section="onboarding"><Faq /></HomeGate>
             <div className="mk-about-link"><button type="button" className="button button-outline" onClick={() => navigateTo("about")}>Qui sommes-nous et conditions</button></div>
+            <GuideApp />
             <HomeGate section="ateliers"><AtelierTeaser /></HomeGate>
 
             <HomeGate section="jobs"><JobsHome /></HomeGate>
