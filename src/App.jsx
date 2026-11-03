@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ProfileProgress, Onboarding, Testimonials, OrderSteps, Faq, AboutPage } from "./Marketing";
 import { AdminHub, TrainerHub, CoordHub } from "./SubHub";
 import { AttestationAdmin, MyAttestations } from "./Attestations";
 import PortfolioStaff from "./PortfolioStaff";
@@ -2930,6 +2931,12 @@ return (
 
             <HomeGate section="catalogs"><CatalogsHome /></HomeGate>
 
+            <HomeGate section="onboarding"><ProfileProgress profile={profile} /></HomeGate>
+            <HomeGate section="onboarding"><Onboarding profile={profile} /></HomeGate>
+            <HomeGate section="onboarding"><Testimonials /></HomeGate>
+            <HomeGate section="onboarding"><OrderSteps /></HomeGate>
+            <HomeGate section="onboarding"><Faq /></HomeGate>
+            <div className="mk-about-link"><button type="button" className="button button-outline" onClick={() => navigateTo("about")}>Qui sommes-nous et conditions</button></div>
             <HomeGate section="ateliers"><AtelierTeaser /></HomeGate>
 
             <HomeGate section="jobs"><JobsHome /></HomeGate>
@@ -2949,6 +2956,7 @@ return (
         {activePage === "news" && <NewsSection user={user} role={role} onNotify={notify} />}
 
         {activePage === "jobs" && <JobsPage />}
+        {activePage === "about" && <section className="section-container"><AboutPage /></section>}
 
         {activePage === "photo" && <CatalogPhoto />}
 
