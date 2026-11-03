@@ -76,10 +76,10 @@ export function SecondaryMenu() {
             <button type="button" className="sheet-item" onClick={() => go("messages")}>✉ Messagerie</button>
             <button type="button" className="sheet-item" onClick={() => go("notifications")}>🔔 Notifications</button>
             <button type="button" className="sheet-item" onClick={() => go("contact")}>☎ Contact</button>
-            <button type="button" className="sheet-item" onClick={() => go("contact")}>? Assistance</button>
             <button type="button" className="sheet-item" onClick={() => go("referral")}>🎁 Parrainage</button>
             <button type="button" className="sheet-item" onClick={() => go("account")}>⚙ Paramètres</button>
             <button type="button" className="sheet-item sheet-danger" onClick={logout}>⎋ Déconnexion</button>
+            <button type="button" className="sheet-item" onClick={() => go("assistance")}>? Assistance</button>
           </div>
         </div>
       )}

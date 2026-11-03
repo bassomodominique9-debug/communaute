@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import AssistantChat from "./AssistantChat";
 import { ProfileProgress, Onboarding, Testimonials, OrderSteps, Faq, AboutPage } from "./Marketing";
 import { AdminHub, TrainerHub, CoordHub } from "./SubHub";
 import { AttestationAdmin, MyAttestations } from "./Attestations";
@@ -2957,6 +2958,7 @@ return (
 
         {activePage === "jobs" && <JobsPage />}
         {activePage === "about" && <section className="section-container"><AboutPage /></section>}
+        {activePage === "assistance" && <AssistantChat />}
 
         {activePage === "photo" && <CatalogPhoto />}
 
