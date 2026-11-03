@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 import "./account-catalog.css";
+import { ProfileProgress, CompleteProfilePanel, BackArrow } from "./Marketing";
 
 // Catalogue de « Mon espace » : seulement les options accessibles au rôle du compte
 
-export default function AccountCatalog({ role, onOpen }) {
+export default function AccountCatalog({ role, onOpen, profile }) {
+  const [view, setView] = useState(null);
   const [coordAccess, setCoordAccess] = useState(false);
   useEffect(() => {
     let active = true;
@@ -32,8 +34,20 @@ export default function AccountCatalog({ role, onOpen }) {
     ...(coordAccess ? [{ key: "coordinator", icon: "◈", title: "Coordination", sub: "Sécurité et accès", open: () => onOpen("coordinator") }] : []),
   ];
 
+  if (view === "complete") {
+    return (
+      <section className="account-catalog" aria-label="Compléter mon profil">
+        <CompleteProfilePanel onBack={() => setView(null)} onOpenProfile={() => onOpen("profile")} />
+      </section>
+    );
+  }
+
   return (
     <section className="account-catalog" aria-label="Options de mon espace">
+      <ProfileProgress profile={profile} />
+      <button type="button" className="mk-chip mk-chip-slim" onClick={() => setView("complete")}>
+        <span className="mk-chip-icon">✨</span><b>Compléter mon profil</b><span className="mk-chevron">›</span>
+      </button>
       <h2 className="account-catalog-title">Mes options</h2>
       <div className="account-catalog-grid">
         {tiles.map((t) => (

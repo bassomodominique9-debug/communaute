@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import GuideApp from "./GuideApp";
 import AssistantChat from "./AssistantChat";
-import { ProfileProgress, Onboarding, Testimonials, OrderSteps, Faq, AboutPage } from "./Marketing";
+import { Testimonials, AboutPage, HomeMini } from "./Marketing";
 import { AdminHub, TrainerHub, CoordHub } from "./SubHub";
 import { AttestationAdmin, MyAttestations } from "./Attestations";
 import PortfolioStaff from "./PortfolioStaff";
@@ -1895,7 +1895,7 @@ function AccountSection({
           )}
           {activeTab === "overview" && (
             <div className="account-tab-content account-overview">
-              <AccountCatalog role={role} onOpen={setActiveTab} />
+              <AccountCatalog role={role} profile={profile} onOpen={setActiveTab} />
               <div className="account-section-title">
                 <div>
                   <span className="eyebrow">TABLEAU DE BORD</span>
@@ -2933,12 +2933,7 @@ return (
 
             <HomeGate section="catalogs"><CatalogsHome /></HomeGate>
 
-            <HomeGate section="onboarding"><ProfileProgress profile={profile} /></HomeGate>
-            <HomeGate section="onboarding"><Onboarding profile={profile} /></HomeGate>
-            <HomeGate section="onboarding"><Testimonials /></HomeGate>
-            <HomeGate section="onboarding"><OrderSteps /></HomeGate>
-            <HomeGate section="onboarding"><Faq /></HomeGate>
-            <div className="mk-about-link"><button type="button" className="button button-outline" onClick={() => navigateTo("about")}>Qui sommes-nous et conditions</button></div>
+            <HomeGate section="onboarding"><HomeMini /></HomeGate>
             <GuideApp />
             <HomeGate section="ateliers"><AtelierTeaser /></HomeGate>
 
