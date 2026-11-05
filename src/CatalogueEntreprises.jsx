@@ -3,6 +3,7 @@ import { supabase } from "./supabaseClient";
 import { uploadFile } from "./Attachments";
 import { DOMAINES } from "./jobSkills";
 import "./catalogue-entreprises.css";
+import CataloguePublications from "./CataloguePublications";
 
 const notify = (m) => window.dispatchEvent(new CustomEvent("ed-bcenter-notify", { detail: m }));
 const errMsg = (e) => (/function|schema cache|does not exist/i.test(e?.message || "") ? "Installe le SQL « partie 42 » dans Supabase." : e?.message || "Erreur");
@@ -18,7 +19,7 @@ export function CompanyList({ onOpen }) {
     <div className="ce-grid">
       {items.map((c) => (
         <button key={c.id} type="button" className="ce-card ce-cube" onClick={() => onOpen(c)}>
-          <div className="ce-cube-photo"><img src={c.photo_url} alt="" loading="lazy" /></div>
+          <div className="ce-cube-photo"><img src={c.photo_url} alt="" loading="lazy" />{(c.avatar_url || c.logo_url) && <img className="ce-avatar" src={c.avatar_url || c.logo_url} alt="" />}</div>
           <div className="ce-cube-info">
             <strong>{c.name}</strong>
             <small className="ce-cube-domaine">{c.domaine}</small>
@@ -41,9 +42,13 @@ export function Stars({ value }) {
 
 export function CompanyDetail({ company, onBack }) {
   const digits = String(company.whatsapp || "").replace(/\D/g, "");
-  async function order(title) {
+  const [pubs, setPubs] = useState(null);
+  useEffect(() => {
+    supabase.rpc("list_catalogue_publications", { p_id: company.id }).then(({ data, error }) => setPubs(error ? [] : (Array.isArray(data) ? data : [])));
+  }, [company.id]);
+  async function order(text) {
     await supabase.rpc("order_catalogue", { p_id: company.id });
-    window.open(`https://wa.me/${digits}?text=${encodeURIComponent("Bonjour, je souhaite commander : " + title)}`, "_blank", "noopener,noreferrer");
+    window.open(`https://wa.me/${digits}?text=${encodeURIComponent("Bonjour, je souhaite commander : " + text)}`, "_blank", "noopener,noreferrer");
   }
   async function report() {
     const { error } = await supabase.rpc("report_catalogue", { p_id: company.id });
@@ -51,19 +56,24 @@ export function CompanyDetail({ company, onBack }) {
   }
   return (
     <section className="ce-detail">
-      <header className="ce-head"><button type="button" className="ce-back" aria-label="Retour" onClick={onBack}>‹</button><strong>{company.name}</strong></header>
+      <header className="ce-head">
+        <button type="button" className="ce-back" aria-label="Retour" onClick={onBack}>‹</button>
+        {(company.avatar_url || company.logo_url) && <img className="ce-head-avatar" src={company.avatar_url || company.logo_url} alt="" />}
+        <strong>{company.name}</strong>
+      </header>
       <img className="ce-hero" src={company.photo_url} alt="" />
-      <Stars value={company.stars || 0} />
+      <small className="ce-cube-domaine">{company.domaine}</small>
       <p className="ce-desc">{company.description}</p>
-      <h4 className="ce-sub">Publications de l'entreprise</h4>
-      <div className="ce-prests">
-        {(company.prestations || []).map((p) => (
-          <article key={p.id} className="ce-prest-sq">
-            {p.photo_url ? <img src={p.photo_url} alt="" loading="lazy" /> : <div className="ce-prest-sq-empty" />}
-            <div className="ce-prest-sq-foot">
-              <strong>{p.title}</strong>
-              <button type="button" className="ce-order" onClick={() => order(p.title)}>Commander</button>
-            </div>
+      <Stars value={company.stars || 0} />
+      <h4 className="ce-sub">Publications</h4>
+      {pubs === null && <p className="ce-note">Chargement…</p>}
+      {pubs && pubs.length === 0 && <p className="ce-note">Aucune publication pour le moment.</p>}
+      <div className="ce-feed">
+        {(pubs || []).map((p) => (
+          <article key={p.id} className="ce-pub">
+            {p.photo_url && <img src={p.photo_url} alt="" loading="lazy" />}
+            {p.body && <p>{p.body}</p>}
+            <button type="button" className="ce-order" onClick={() => order(p.body || company.name)}>Commander</button>
           </article>
         ))}
       </div>
@@ -190,6 +200,7 @@ export function MyCatalogue({ onBack }) {
       {(cat.prestations || []).map((x) => (
         <article key={x.id} className="ce-prest"><div><strong>{x.title}</strong><small>{x.description}</small></div><button type="button" className="ce-del" onClick={() => delPrest(x.id)}>Supprimer</button></article>
       ))}
+      <CataloguePublications />
       <form className="ce-form" onSubmit={addPrest}>
         <input value={p.title} onChange={(e) => setP({ ...p, title: e.target.value })} placeholder="Titre de la prestation" required maxLength={120} />
         <textarea rows={3} value={p.description} onChange={(e) => setP({ ...p, description: e.target.value })} placeholder="Description" maxLength={800} />
