@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ServicesCatalogues from "./ServicesCatalogues";
 import CatalogHub from "./CatalogHub";
 import HomeHub from "./HomeHub";
 import SocialIcon from "./SocialIcon";
@@ -713,31 +714,6 @@ function IntroSection({ onNavigate, onRegister }) {
           </button>
         </div>
 
-        <div className="intro-highlights">
-          <div className="intro-highlight">
-            <span className="highlight-number">01</span>
-            <span>
-              <strong>Apprendre</strong>
-              <small>Acquérir des compétences</small>
-            </span>
-          </div>
-
-          <div className="intro-highlight">
-            <span className="highlight-number">02</span>
-            <span>
-              <strong>Pratiquer</strong>
-              <small>Réaliser des exercices concrets</small>
-            </span>
-          </div>
-
-          <div className="intro-highlight">
-            <span className="highlight-number">03</span>
-            <span>
-              <strong>Entreprendre</strong>
-              <small>Préparer ses prochaines actions</small>
-            </span>
-          </div>
-        </div>
       </div>
 
       <div className="intro-visual">
@@ -910,6 +886,7 @@ function ServicesSection({ onNavigate, onSelectService }) {
           />
         ))}
       </div>
+      <ServicesCatalogues />
     </section>
   );
 }

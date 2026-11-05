@@ -17,35 +17,57 @@ export function CompanyList({ onOpen }) {
   return (
     <div className="ce-grid">
       {items.map((c) => (
-        <button key={c.id} type="button" className="ce-card" onClick={() => onOpen(c)}>
-          <div className="ce-photo"><img src={c.photo_url} alt="" loading="lazy" /><img className="ce-logo" src={c.logo_url} alt="" loading="lazy" /></div>
-          {c.flyer_url && <img className="ce-flyer" src={c.flyer_url} alt="Flyer" loading="lazy" />}
-          <div className="ce-foot"><strong>{c.name}</strong><small>{c.domaine}</small></div>
+        <button key={c.id} type="button" className="ce-card ce-cube" onClick={() => onOpen(c)}>
+          <div className="ce-cube-photo"><img src={c.photo_url} alt="" loading="lazy" /></div>
+          <div className="ce-cube-info">
+            <strong>{c.name}</strong>
+            <small className="ce-cube-domaine">{c.domaine}</small>
+            <small className="ce-cube-desc">{c.short || c.description}</small>
+            <Stars value={c.stars || 0} />
+          </div>
         </button>
       ))}
     </div>
   );
 }
 
+export function Stars({ value }) {
+  return (
+    <div className="ce-stars" aria-label={`${value} étoile(s) sur 6`}>
+      {[0, 1, 2, 3, 4, 5].map((i) => <span key={i} className={i < value ? "on" : ""}>★</span>)}
+    </div>
+  );
+}
+
 export function CompanyDetail({ company, onBack }) {
   const digits = String(company.whatsapp || "").replace(/\D/g, "");
+  async function order(title) {
+    await supabase.rpc("order_catalogue", { p_id: company.id });
+    window.open(`https://wa.me/${digits}?text=${encodeURIComponent("Bonjour, je souhaite commander : " + title)}`, "_blank", "noopener,noreferrer");
+  }
   async function report() {
-    const { data, error } = await supabase.rpc("report_catalogue", { p_id: company.id });
+    const { error } = await supabase.rpc("report_catalogue", { p_id: company.id });
     if (error) notify(errMsg(error)); else notify("Merci. Ton signalement a été enregistré.");
   }
   return (
     <section className="ce-detail">
       <header className="ce-head"><button type="button" className="ce-back" aria-label="Retour" onClick={onBack}>‹</button><strong>{company.name}</strong></header>
       <img className="ce-hero" src={company.photo_url} alt="" />
+      <Stars value={company.stars || 0} />
       <p className="ce-desc">{company.description}</p>
+      <h4 className="ce-sub">Publications de l'entreprise</h4>
+      <div className="ce-prests">
+        {(company.prestations || []).map((p) => (
+          <article key={p.id} className="ce-prest-sq">
+            {p.photo_url ? <img src={p.photo_url} alt="" loading="lazy" /> : <div className="ce-prest-sq-empty" />}
+            <div className="ce-prest-sq-foot">
+              <strong>{p.title}</strong>
+              <button type="button" className="ce-order" onClick={() => order(p.title)}>Commander</button>
+            </div>
+          </article>
+        ))}
+      </div>
       <button type="button" className="ce-report" onClick={report}>Signaler ce catalogue</button>
-      {(company.prestations || []).map((p) => (
-        <article key={p.id} className="ce-prest">
-          {p.photo_url && <img src={p.photo_url} alt="" loading="lazy" />}
-          <div><strong>{p.title}</strong><small>{p.description}</small></div>
-          <a className="ce-order" href={`https://wa.me/${digits}?text=${encodeURIComponent("Bonjour, je souhaite commander : " + p.title)}`} target="_blank" rel="noopener noreferrer">Commander</a>
-        </article>
-      ))}
     </section>
   );
 }

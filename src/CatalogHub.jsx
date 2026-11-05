@@ -58,23 +58,6 @@ export default function CatalogHub() {
         </div>
       )}
 
-      <div className="catalog-hub-piliers">
-        {PILIERS.map((p) => (
-          <button key={p.n} type="button" className="catalog-hub-pilier" onClick={() => go(p.page)}>
-            <span className="catalog-hub-num">{p.n}</span>
-            <strong>{p.title}</strong>
-            <small>{p.text}</small>
-          </button>
-        ))}
-      </div>
-
-      <div className="catalog-hub-preuves">
-        {PREUVES.map((p) => (
-          <button key={p.text} type="button" className="catalog-hub-preuve" onClick={() => go(p.page)}>
-            <span aria-hidden="true">{p.icon}</span>{p.text}
-          </button>
-        ))}
-      </div>
     </section>
   );
 }
