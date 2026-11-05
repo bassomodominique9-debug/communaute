@@ -4,6 +4,7 @@ import AdminSpace from "./AdminSpace";
 import ParcoursManager from "./ParcoursManager";
 import PortfolioStaff from "./PortfolioStaff";
 import CoordinatorPanel from "./CoordinatorPanel";
+import AdminCatalogues from "./AdminCatalogues";
 
 // Catalogue d'options (même style que « Mes options »)
 function SubCatalog({ items, onOpen }) {
@@ -39,11 +40,11 @@ const ADMIN_ITEMS = [
   ["cohorts", "Promotions", "👥"], ["tickets", "Tickets", "🎟"], ["posts", "Publications", "📰"],
   ["users", "Utilisateurs", "👤"], ["reports", "Signalements", "⚑"], ["services", "Services", "🧩"],
   ["home", "Annonce accueil", "📣"], ["videos", "Vidéos", "🎬"], ["homemgr", "Page d'accueil", "🏠"],
-  ["finance", "Trésorerie", "💰"], ["catalog", "Catalogue formations", "📚"],
+  ["finance", "Trésorerie", "💰"], ["catalog", "Catalogue formations", "📚"], ["catalogues", "Catalogues entreprises", "🏪"],
 ].map(([key, title, icon]) => ({ key, title, icon, sub: "Ouvrir" }));
 
 export function AdminHub(props) {
-  return <Hub items={ADMIN_ITEMS} renderOption={(key) => <AdminSpace {...props} initialTab={key} hideTabs />} />;
+  return <Hub items={ADMIN_ITEMS} renderOption={(key) => (key === "catalogues" ? <AdminCatalogues /> : <AdminSpace {...props} initialTab={key} hideTabs />)} />;
 }
 
 export function TrainerHub(props) {
