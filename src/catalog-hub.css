@@ -17,3 +17,7 @@
 .catalog-hub-pilier small { color: var(--ed-text-muted); font-size: .8rem; line-height: 1.35; }
 .catalog-hub-preuves { display: flex; flex-wrap: wrap; gap: 8px; }
 .catalog-hub-preuve { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 999px; background: #eef4ff; color: var(--ed-blue-night); font-size: .8rem; font-weight: 700; border: 0; }
+
+.catalog-hub-sub { color: var(--ed-blue-night); font-weight: 800; font-size: .95rem; margin-top: 4px; }
+.catalog-hub-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.catalog-hub-action { min-height: 44px; border-radius: 14px; border: 1px solid var(--ed-border); background: #fff; color: var(--ed-blue); font-weight: 800; font-size: .85rem; }

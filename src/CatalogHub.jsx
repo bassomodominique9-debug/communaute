@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./catalog-hub.css";
+import { CompanyList, CompanyDetail, CatalogueCreate, MyCatalogue } from "./CatalogueEntreprises";
 
 const go = (page) => window.dispatchEvent(new CustomEvent("ed-navigate", { detail: page }));
 
@@ -26,6 +27,11 @@ const PREUVES = [
 
 export default function CatalogHub() {
   const [open, setOpen] = useState(false);
+  const [view, setView] = useState(null);
+  const [company, setCompany] = useState(null);
+  if (view === "company" && company) return <section className="catalog-hub section-container"><CompanyDetail company={company} onBack={() => setView(null)} /></section>;
+  if (view === "create") return <section className="catalog-hub section-container"><CatalogueCreate onBack={() => setView(null)} onDone={() => setView(null)} /></section>;
+  if (view === "manage") return <section className="catalog-hub section-container"><MyCatalogue onBack={() => setView(null)} /></section>;
   return (
     <section className="catalog-hub section-container" aria-label="Catalogues ED B-CENTER">
       <button type="button" className="catalog-hub-main" onClick={() => setOpen(!open)} aria-expanded={open}>
@@ -43,7 +49,12 @@ export default function CatalogHub() {
               <span className="catalog-hub-chev">›</span>
             </button>
           ))}
-          <p className="catalog-hub-soon">Les catalogues des entreprises seront affichés ici.</p>
+          <p className="catalog-hub-sub">Catalogues des entreprises</p>
+          <CompanyList onOpen={(c) => { setCompany(c); setView("company"); }} />
+          <div className="catalog-hub-actions">
+            <button type="button" className="catalog-hub-action" onClick={() => setView("create")}>Créer mon catalogue</button>
+            <button type="button" className="catalog-hub-action" onClick={() => setView("manage")}>Gérer mon catalogue</button>
+          </div>
         </div>
       )}
 
