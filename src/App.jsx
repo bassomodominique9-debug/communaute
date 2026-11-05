@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import CatalogHub from "./CatalogHub";
+import HomeHub from "./HomeHub";
 import SocialIcon from "./SocialIcon";
 import GuideApp from "./GuideApp";
 import AssistantChat from "./AssistantChat";
@@ -2930,7 +2932,8 @@ return (
               />
             </HomeGate>
 
-            <HomeGate section="catalogs"><CatalogsHome /></HomeGate>
+            <HomeHub />
+            <HomeGate section="catalogs"><CatalogHub /></HomeGate>
 
             <HomeGate section="onboarding"><HomeMini /></HomeGate>
             <GuideApp />
