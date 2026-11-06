@@ -873,19 +873,6 @@ function ServicesSection({ onNavigate, onSelectService }) {
         </button>
       </div>
 
-      <div className="services-mobile-dots">
-        {services.map((service, index) => (
-          <button
-            key={service.id}
-            type="button"
-            className={`services-dot ${
-              index === currentIndex ? "services-dot-active" : ""
-            }`}
-            onClick={() => setCurrentIndex(Math.min(index, maxIndex))}
-            aria-label={`Afficher les services à partir de ${service.name}`}
-          />
-        ))}
-      </div>
       <ServicesCatalogues services={services} onSelectService={onSelectService} />
     </section>
   );
