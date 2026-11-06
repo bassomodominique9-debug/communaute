@@ -34,7 +34,7 @@ export default function AdminCatalogues() {
       <strong>Paiements à confirmer ({pays.length})</strong>
       {pays.map((p) => (
         <div key={p.id} className="ce-admin-actions">
-          <small>{p.catalogue} · {p.months} mois · {Number(p.amount).toLocaleString("fr-FR")} FCFA · réf. {p.transaction_id}</small>
+          <small>{p.catalogue} · {p.months} {p.unit === "semaine" ? "semaine(s)" : "mois"} · {Number(p.amount).toLocaleString("fr-FR")} FCFA · réf. {p.transaction_id}</small>
           <a href={p.proof_url} target="_blank" rel="noopener noreferrer">Voir la preuve</a>
           <button type="button" onClick={() => confirmPay(p.id)}>Confirmer</button>
         </div>

@@ -122,8 +122,10 @@ export default function ServicesCatalogues({ services = [] }) {
   const [list, setList] = useState([]);
   const [view, setView] = useState(null);
   const [current, setCurrent] = useState(null);
+  const [mine, setMine] = useState(null);
   useEffect(() => {
     supabase.rpc("list_public_catalogues").then(({ data }) => setList(Array.isArray(data) ? data : []));
+    supabase.rpc("my_catalogue").then(({ data }) => setMine(data || null));
   }, []);
   if (view === "page") return <div className="sc-wrap">
     <CatalogPage company={current.company} ed={current.ed} services={services} onBack={() => setView(null)} />
@@ -133,6 +135,13 @@ export default function ServicesCatalogues({ services = [] }) {
   const open = (company, ed) => { setCurrent({ company, ed }); setView("page"); };
   return (
     <section className="sc-wrap" aria-label="Affiches des entreprises">
+      {mine && !mine.active && (
+        <div className="sc-expired">
+          <strong>Ton catalogue est fermé</strong>
+          <small>Il n'est plus visible. Renouvelle ton abonnement pour le rendre à nouveau visible.</small>
+          <button type="button" className="sc-btn sc-btn-big" onClick={() => setView("manage")}>Renouveler</button>
+        </div>
+      )}
       <div className="sc-posters">
         <Poster name={ED_NAME} domaine="Catalogue officiel" image={imageUrl("logo-ed-b-center.png")} stars={5} onVisit={() => open(null, true)} />
         {list.map((c) => (
