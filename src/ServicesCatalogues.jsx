@@ -104,6 +104,20 @@ function CatalogPage({ company, ed, services, onBack }) {
   );
 }
 
+function Poster({ name, domaine, image, stars, onVisit }) {
+  return (
+    <article className="sc-poster">
+      <div className="sc-poster-img"><img src={image} alt="" loading="lazy" /></div>
+      <div className="sc-poster-info">
+        <strong>{name}</strong>
+        <small>{domaine}</small>
+        <Stars value={stars} />
+        <button type="button" className="sc-btn sc-btn-big" onClick={onVisit}>Visiter</button>
+      </div>
+    </article>
+  );
+}
+
 export default function ServicesCatalogues({ services = [] }) {
   const [list, setList] = useState([]);
   const [view, setView] = useState(null);
@@ -118,12 +132,12 @@ export default function ServicesCatalogues({ services = [] }) {
   if (view === "manage") return <div className="sc-wrap"><MyCatalogue onBack={() => setView(null)} /></div>;
   const open = (company, ed) => { setCurrent({ company, ed }); setView("page"); };
   return (
-    <section className="sc-wrap" aria-label="Catalogues">
-      <span className="sc-eyebrow">CATALOGUES</span>
-      <h3 className="sc-title">Découvre les entreprises et leurs prestations</h3>
-      <div className="sc-grid">
-        <Cube ed services={services} onOpen={() => open(null, true)} />
-        {list.map((c) => <Cube key={c.id} company={c} services={services} onOpen={() => open(c, false)} />)}
+    <section className="sc-wrap" aria-label="Affiches des entreprises">
+      <div className="sc-posters">
+        <Poster name={ED_NAME} domaine="Catalogue officiel" image={imageUrl("logo-ed-b-center.png")} stars={5} onVisit={() => open(null, true)} />
+        {list.map((c) => (
+          <Poster key={c.id} name={c.name} domaine={c.domaine} image={c.flyer_url || c.photo_url} stars={c.stars || 0} onVisit={() => open(c, false)} />
+        ))}
       </div>
       <div className="sc-actions">
         <button type="button" className="sc-action" onClick={() => setView("create")}>Créer mon catalogue</button>

@@ -35,3 +35,12 @@
 .sc-prest-body strong { color: var(--ed-blue-night); font-size: .95rem; }
 .sc-prest-body small { color: var(--ed-text-muted); font-size: .82rem; line-height: 1.4; }
 .sc-empty { color: var(--ed-text-muted); font-size: .85rem; text-align: center; }
+
+.services-intro { text-align: center; color: var(--ed-text-muted); font-size: .9rem; line-height: 1.45; margin: 0 16px 12px; }
+.sc-posters { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sc-poster { display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; background: #fff; border: 1px solid var(--ed-border); box-shadow: var(--ed-shadow-sm); }
+.sc-poster-img { aspect-ratio: 3 / 4; background: #eaf0f2; }
+.sc-poster-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sc-poster-info { display: grid; gap: 4px; padding: 8px; }
+.sc-poster-info strong { color: var(--ed-blue-night); font-size: .85rem; line-height: 1.2; }
+.sc-poster-info small { color: var(--ed-text-muted); font-size: .72rem; }
