@@ -125,16 +125,24 @@ export function CatalogueCreate({ onBack, onDone }) {
   );
 }
 
-const PRIX = { particulier: { par: 5000, min: 1, label: "Particulier : 5 000 FCFA par mois" }, grande: { par: 12500, min: 2, label: "Grande entreprise : 25 000 FCFA pour 2 mois" } };
+const TARIFS = {
+  particulier: { label: "Petite entreprise ou particulier", units: ["mois"] },
+  grande: { label: "Grande entreprise", units: ["mois", "semaine"] },
+};
+const calcul = (type, unit, qty) => {
+  if (type === "particulier") return Math.floor(qty / 3) * 2500 + (qty % 3) * 1000;
+  if (unit === "semaine") return 1500 * qty;
+  return 5000 * qty;
+};
 
 export function SubscriptionForm({ onDone }) {
   const [type, setType] = useState("particulier");
-  const [months, setMonths] = useState(1);
+  const [unit, setUnit] = useState("mois");
+  const [qty, setQty] = useState(1);
   const [tx, setTx] = useState("");
   const [proof, setProof] = useState(null);
   const [busy, setBusy] = useState(false);
-  const info = PRIX[type];
-  const total = info.par * Math.max(months, info.min);
+  const total = calcul(type, unit, qty);
   async function pay(e) {
     e.preventDefault();
     if (!proof) { notify("Ajoute la photo de la transaction."); return; }
@@ -142,7 +150,7 @@ export function SubscriptionForm({ onDone }) {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       const url = await uploadFile(user, proof, "paiements-catalogues/");
-      const { error } = await supabase.rpc("submit_catalogue_payment", { p_type: type, p_months: Math.max(months, info.min), p_tx: tx, p_proof: url });
+      const { error } = await supabase.rpc("submit_catalogue_payment", { p_type: type, p_unit: unit, p_qty: qty, p_tx: tx, p_proof: url });
       if (error) throw error;
       notify("Paiement envoyé. Ton catalogue sera réactivé après confirmation.");
       onDone();
@@ -152,11 +160,14 @@ export function SubscriptionForm({ onDone }) {
   return (
     <form className="ce-form ce-pay" onSubmit={pay}>
       <strong>Régler ma facture</strong>
-      <select value={type} onChange={(e) => { setType(e.target.value); setMonths(PRIX[e.target.value].min); }}>
-        <option value="particulier">Particulier (5 000 FCFA par mois)</option>
-        <option value="grande">Grande entreprise (25 000 FCFA pour 2 mois)</option>
+      <select value={type} onChange={(e) => { setType(e.target.value); setUnit("mois"); setQty(1); }}>
+        <option value="particulier">{TARIFS.particulier.label} : 1 000 FCFA par mois, 2 500 FCFA pour 3 mois</option>
+        <option value="grande">{TARIFS.grande.label} : 5 000 FCFA par mois ou 1 500 FCFA par semaine</option>
       </select>
-      <label>Nombre de mois<input type="number" min={info.min} value={months} onChange={(e) => setMonths(Number(e.target.value))} /></label>
+      <select value={unit} onChange={(e) => { setUnit(e.target.value); setQty(1); }}>
+        {TARIFS[type].units.map((u) => <option key={u} value={u}>{u === "mois" ? "Par mois" : "Par semaine"}</option>)}
+      </select>
+      <label>Nombre de {unit === "mois" ? "mois" : "semaines"}<input type="number" min={1} value={qty} onChange={(e) => setQty(Math.max(1, Number(e.target.value)))} /></label>
       <div className="ce-total">Total à payer : <b>{total.toLocaleString("fr-FR")} FCFA</b></div>
       <input value={tx} onChange={(e) => setTx(e.target.value)} placeholder="ID de la transaction" required />
       <label>Photo de la transaction<input type="file" accept="image/*" required onChange={(e) => setProof(e.target.files?.[0] || null)} /></label>
