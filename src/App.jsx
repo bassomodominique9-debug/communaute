@@ -2785,8 +2785,6 @@ return (
       <main>
         {activePage === "home" && (
           <>
-            <HomeShortcuts onNavigate={navigateTo} />
-
             <MotivationCarousel />
 
             <HomeGate section="announcement" defaultVisible={false}><HomeAnnouncement /></HomeGate>
