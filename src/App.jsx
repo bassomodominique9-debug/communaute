@@ -886,7 +886,7 @@ function ServicesSection({ onNavigate, onSelectService }) {
           />
         ))}
       </div>
-      <ServicesCatalogues />
+      <ServicesCatalogues services={services} onSelectService={onSelectService} />
     </section>
   );
 }
