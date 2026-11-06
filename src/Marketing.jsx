@@ -6,7 +6,14 @@ const go = (page) => window.dispatchEvent(new CustomEvent("ed-navigate", { detai
 // Témoignages : publiés par les membres, validés par l'administrateur (liste vide tant qu'il n'y en a pas)
 export const TESTIMONIALS = [];
 
-const PROFILE_FIELDS = ["full_name", "phone", "city", "country", "avatar_url"];
+// Éléments exigés pour un profil complet ; chacun accepte plusieurs noms de champs possibles
+const PROFILE_CRITERIA = [
+  ["full_name", "name", "nom", "nom_complet"],
+  ["phone", "telephone", "numero", "whatsapp"],
+  ["address", "adresse", "city", "ville"],
+  ["avatar_url", "photo_url", "profile_photo", "photo"],
+];
+const filledKey = (profile, keys) => keys.some((k) => profile && profile[k] != null && String(profile[k]).trim() !== "");
 
 // Flèche de retour : icône seule, discrète
 export function BackArrow({ onClick }) {
@@ -15,8 +22,8 @@ export function BackArrow({ onClick }) {
 
 // Barre de progression du profil (dans Mon espace)
 export function ProfileProgress({ profile }) {
-  const filled = PROFILE_FIELDS.filter((k) => profile && profile[k] && String(profile[k]).trim() !== "").length;
-  const percent = Math.round((filled / PROFILE_FIELDS.length) * 100);
+  const filled = PROFILE_CRITERIA.filter((keys) => filledKey(profile, keys)).length;
+  const percent = Math.round((filled / PROFILE_CRITERIA.length) * 100);
   return (
     <section className="mk-progress" aria-label="Profil complété">
       <div className="mk-progress-top"><strong>Mon profil</strong><span className="mk-pct">{percent}%</span></div>

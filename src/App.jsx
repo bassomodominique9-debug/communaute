@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import HomeShortcuts from "./HomeShortcuts";
 import ServicesCatalogues from "./ServicesCatalogues";
 import CatalogHub from "./CatalogHub";
 import HomeHub from "./HomeHub";
@@ -2784,15 +2785,15 @@ return (
       <main>
         {activePage === "home" && (
           <>
-            <SearchBox />
+            <HomeShortcuts onNavigate={navigateTo} />
 
             <MotivationCarousel />
 
-            <HomeGate section="announcement"><HomeAnnouncement /></HomeGate>
+            <HomeGate section="announcement" defaultVisible={false}><HomeAnnouncement /></HomeGate>
 
             <HomeGate section="videos"><LearnerVideos /></HomeGate>
 
-            <HomeGate section="top_learner"><TopLearner /></HomeGate>
+            <HomeGate section="top_learner" defaultVisible={false}><TopLearner /></HomeGate>
 
             <HomeGate section="intro">
               <IntroSection
@@ -2801,12 +2802,6 @@ return (
               />
             </HomeGate>
 
-            <HomeGate section="services">
-              <ServicesSection
-                onNavigate={navigateTo}
-                onSelectService={handleSelectService}
-              />
-            </HomeGate>
 
             <HomeHub />
             <HomeGate section="catalogs"><CatalogHub /></HomeGate>
