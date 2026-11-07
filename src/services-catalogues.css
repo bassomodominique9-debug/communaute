@@ -60,3 +60,13 @@
 .sc-expired { display: grid; gap: 6px; padding: 14px; border-radius: 16px; background: #fff7e0; border: 1px solid #f3d27a; color: #7a5300; }
 .sc-expired strong { font-size: .95rem; }
 .sc-expired small { font-size: .8rem; }
+
+/* Entreprises : rangée qui défile automatiquement, trois visibles à la fois */
+.sc-rail { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+.sc-rail::-webkit-scrollbar { display: none; }
+.sc-poster-mini { flex: 0 0 31%; max-width: 31%; scroll-snap-align: start; flex-direction: column; }
+.sc-poster-mini .sc-poster-img { flex: none; aspect-ratio: 3 / 4; min-height: 0; }
+.sc-poster-mini .sc-poster-info { padding: 6px; }
+.sc-poster-mini .sc-poster-info strong { font-size: .72rem; }
+.sc-poster-mini .sc-poster-info small { font-size: .62rem; }
+.sc-poster-mini .sc-btn-big { min-height: 32px; font-size: .75rem; }

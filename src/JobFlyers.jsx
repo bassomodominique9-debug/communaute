@@ -50,7 +50,6 @@ export default function JobFlyers() {
   return (
     <section className="flyers-section" aria-label="Offres publiées par l'administrateur">
       <span className="eyebrow">OFFRES DE L'ADMINISTRATION</span>
-      <div className="flyers-nb">NB : aucune entreprise ne vous demandera de l'argent pour un travail. Soyez vigilants et signalez-nous tout doute.</div>
 
       {state.isAdmin && (
         <form className="flyers-form" onSubmit={publish}>

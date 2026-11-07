@@ -104,9 +104,29 @@ function CatalogPage({ company, ed, services, onBack }) {
   );
 }
 
-function Poster({ name, domaine, image, stars, onVisit }) {
+function AutoRail({ children }) {
+  const ref = useRef(null);
+  const paused = useRef(false);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const t = setInterval(() => {
+      if (paused.current) return;
+      const step = el.firstElementChild ? el.firstElementChild.offsetWidth + 10 : 0;
+      const next = el.scrollLeft + step >= el.scrollWidth - el.clientWidth - 4 ? 0 : el.scrollLeft + step;
+      el.scrollTo({ left: next, behavior: "smooth" });
+    }, 3000);
+    return () => clearInterval(t);
+  }, []);
   return (
-    <article className="sc-poster">
+    <div className="sc-rail" ref={ref} onPointerDown={() => (paused.current = true)} onPointerUp={() => (paused.current = false)} onPointerLeave={() => (paused.current = false)}>
+      {children}
+    </div>
+  );
+}
+
+function Poster({ name, domaine, image, stars, onVisit, mini = false }) {
+  return (
+    <article className={mini ? "sc-poster sc-poster-mini" : "sc-poster"}>
       <div className="sc-poster-img"><img src={image} alt="" loading="lazy" /></div>
       <div className="sc-poster-info">
         <strong>{name}</strong>
@@ -144,10 +164,12 @@ export default function ServicesCatalogues({ services = [] }) {
       )}
       <div className="sc-posters">
         <Poster name={ED_NAME} domaine="Catalogue officiel" image={imageUrl("logo-ed-b-center.png")} stars={5} onVisit={() => open(null, true)} />
-        {list.map((c) => (
-          <Poster key={c.id} name={c.name} domaine={c.domaine} image={c.flyer_url || c.photo_url} stars={c.stars || 0} onVisit={() => open(c, false)} />
-        ))}
       </div>
+      {list.length > 0 && <AutoRail>
+        {list.map((c) => (
+          <Poster key={c.id} mini name={c.name} domaine={c.domaine} image={c.flyer_url || c.photo_url} stars={c.stars || 0} onVisit={() => open(c, false)} />
+        ))}
+      </AutoRail>}
       <div className="sc-actions">
         <button type="button" className="sc-action" onClick={() => setView("create")}>Créer mon catalogue</button>
         <button type="button" className="sc-action" onClick={() => setView("manage")}>Gérer mon catalogue</button>

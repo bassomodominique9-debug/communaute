@@ -10,3 +10,6 @@
 .community-section > .composer-bar, .community-section > .composer-login { order: 1 !important; }
 .community-section > .community-create-form { order: 2 !important; }
 .community-section > .publication-list, .community-section > .community-empty { order: 3 !important; }
+
+/* Page Emploi : avertissement compact, une seule fois */
+.jobs-page .community-warning { margin: 6px 0; padding: 6px 10px; font-size: .74rem; line-height: 1.3; border-radius: 10px; }
