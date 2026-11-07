@@ -15,6 +15,22 @@ const ITEMS = [
   { page: "account", label: "Mon espace", icon: "◉" },
 ];
 
+import "./compact-app.css";
+
+// Icônes de la barre du bas : trait fin, style Instagram
+function NavIcon({ name }) {
+  const common = { width: 24, height: 24, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true" };
+  switch (name) {
+    case "home": return <svg {...common}><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z" /></svg>;
+    case "services": return <svg {...common}><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>;
+    case "courses": return <svg {...common}><path d="M2 9l10-5 10 5-10 5-10-5z" /><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5" /></svg>;
+    case "community": return <svg {...common}><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z" /></svg>;
+    case "jobs": return <svg {...common}><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M9 7V5h6v2" /><path d="M3 12h18" /></svg>;
+    case "account": return <svg {...common}><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6" /></svg>;
+    default: return null;
+  }
+}
+
 export function BottomNav({ activePage }) {
   return (
     <nav className="bottom-nav" aria-label="Navigation principale">
@@ -26,8 +42,8 @@ export function BottomNav({ activePage }) {
           aria-current={activePage === it.page ? "page" : undefined}
           onClick={() => window.dispatchEvent(new CustomEvent("ed-navigate", { detail: it.page }))}
         >
-          <span aria-hidden="true" className="bottom-nav-icon">{it.icon}</span>
-          <span>{it.label}</span>
+          <NavIcon name={it.page} />
+          <span className="sr-only">{it.label}</span>
         </button>
       ))}
     </nav>
