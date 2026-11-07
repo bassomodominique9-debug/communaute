@@ -1,0 +1,14 @@
+/* Accueil façon actualités : sobre, texte cliquable, carrousel plus court */
+.motivation-carousel .motivation-image-wrapper { height: 210px; }
+.motivation-carousel .motivation-overlay h2 { font-size: 1.15rem; }
+.motivation-carousel .motivation-overlay p { font-size: .8rem; }
+.motivation-carousel .carousel-arrow, .motivation-carousel .carousel-indicators,
+.motivation-carousel .motivation-arrow, .motivation-carousel .motivation-dots,
+.motivation-carousel .motivation-indicators, .motivation-carousel .motivation-dot { display: none !important; }
+.motivation-cta { background: none !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; color: #fff !important; font-size: .82rem !important; font-weight: 700 !important; text-decoration: underline; min-height: 0 !important; }
+.intro-section h1 { font-size: 1.35rem; }
+.intro-description { font-size: .84rem; line-height: 1.45; }
+.intro-section .eyebrow { font-size: 10px; }
+.ed-link-row { margin: 16px 0 6px; text-align: center; }
+.ed-text-link { color: var(--ed-blue); font-weight: 700; font-size: .9rem; text-decoration: none; }
+.ed-text-link:hover { text-decoration: underline; }

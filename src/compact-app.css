@@ -13,3 +13,9 @@ h2 { font-size: 1.05rem; }
 h3 { font-size: .98rem; }
 .section-container { padding-left: 12px; padding-right: 12px; }
 .eyebrow { font-size: 10px; letter-spacing: .1em; }
+
+.bottom-nav-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; display: block; margin: 0 auto; border: 2px solid #fff; box-shadow: 0 0 0 1px #d5dcea; }
+.bottom-nav-avatar-empty { display: grid; place-items: center; background: #eef2f8; color: #8a96ab; font-size: 10px; }
+.bottom-nav-on .bottom-nav-avatar { box-shadow: 0 0 0 2px var(--ed-blue); }
+.photo-realisations { display: block; margin: 16px 0 8px; text-align: center; color: var(--ed-blue); font-weight: 800; font-size: .9rem; text-decoration: none; }
+.photo-realisations { display: block; margin: 16px 0 8px; text-align: center; color: var(--ed-blue); font-weight: 800; font-size: .9rem; text-decoration: none; }

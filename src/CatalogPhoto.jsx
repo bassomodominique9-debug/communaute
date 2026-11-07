@@ -1,3 +1,4 @@
+import "./compact-app.css";
 import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 import PaymentFlow from "./PaymentFlow";
@@ -25,16 +26,24 @@ function CoverCard({ slot, title, desc, page }) {
 }
 
 export function CatalogsHome() {
+  const [open, setOpen] = useState(false);
   return (
     <section className="section-container catalogs-home" aria-label="Catalogues">
       <span className="eyebrow">CATALOGUES</span>
-      <h2>Nos catalogues</h2>
-      <div className="catalog-cards">
-        <CoverCard slot="cover_photo" page="photo" title="Photographie" desc="Séances studio et événements" />
-        <CoverCard slot="cover_tableaux" page="tableaux" title="Tableaux muraux" desc="Formats bois, sur mesure" />
-        <CoverCard slot="cover_chine" page="chine" title="Précommandes Chine" desc="Commande via le groupe WhatsApp" />
-        <CoverCard slot="cover_design" page="design" title="Services infographie" desc="Logos, flyers, roll-up, data" />
-      </div>
+      <h2>Catalogues ED B-CENTER</h2>
+      <button type="button" className="catalog-main-card" aria-expanded={open} onClick={() => setOpen(!open)}>
+        <span className="catalog-main-logo">EB</span>
+        <span><strong>Catalogue principal</strong><small>Photographie, tableaux, Chine, services infographie</small></span>
+        <span className="catalog-main-chev">{open ? "⌄" : "›"}</span>
+      </button>
+      {open && (
+        <div className="catalog-cards">
+          <CoverCard slot="cover_photo" page="photo" title="Photographie" desc="Séances studio et événements" />
+          <CoverCard slot="cover_tableaux" page="tableaux" title="Tableaux muraux" desc="Formats bois, sur mesure" />
+          <CoverCard slot="cover_chine" page="chine" title="Précommandes Chine" desc="Commande via le groupe WhatsApp" />
+          <CoverCard slot="cover_design" page="design" title="Services infographie" desc="Logos, flyers, roll-up, data" />
+        </div>
+      )}
     </section>
   );
 }
@@ -70,7 +79,9 @@ export default function CatalogPhoto() {
       )}
       {mode === "studio" && <StudioForm cfg={studioConfigFrom(settings)} />}
       {mode === "event" && <EventForm waUrl={links.whatsapp_event} />}
-    </section>
+      <a className="photo-realisations" href="https://eddigitalagency.pixieset.com" target="_blank" rel="noopener noreferrer">Visiter nos réalisations →</a>
+      <p className="ed-link-row"><a className="ed-text-link" href="https://eddigitalagency.pixieset.com" target="_blank" rel="noopener noreferrer">Visiter nos réalisations →</a></p>
+      </section>
   );
 }
 

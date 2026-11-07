@@ -26,7 +26,7 @@ const PREUVES = [
 ];
 
 export default function CatalogHub() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [view, setView] = useState(null);
   const [company, setCompany] = useState(null);
   if (view === "company" && company) return <section className="catalog-hub section-container"><CompanyDetail company={company} onBack={() => setView(null)} /></section>;

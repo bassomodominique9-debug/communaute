@@ -31,6 +31,24 @@ function NavIcon({ name }) {
   }
 }
 
+// Icône Mon espace : petit cercle avec la photo de profil du compte
+function AccountAvatar() {
+  const [photo, setPhoto] = useState("");
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase.from("profiles").select("avatar_url").eq("id", user.id).maybeSingle();
+      if (active && data?.avatar_url) setPhoto(data.avatar_url);
+    })();
+    return () => { active = false; };
+  }, []);
+  return photo
+    ? <img className="bottom-nav-avatar" src={photo} alt="" />
+    : <span className="bottom-nav-avatar bottom-nav-avatar-empty" aria-hidden="true">●</span>;
+}
+
 export function BottomNav({ activePage }) {
   return (
     <nav className="bottom-nav" aria-label="Navigation principale">
@@ -42,7 +60,7 @@ export function BottomNav({ activePage }) {
           aria-current={activePage === it.page ? "page" : undefined}
           onClick={() => window.dispatchEvent(new CustomEvent("ed-navigate", { detail: it.page }))}
         >
-          <NavIcon name={it.page} />
+          {it.page === "account" ? <AccountAvatar /> : <NavIcon name={it.page} />}
           <span className="sr-only">{it.label}</span>
         </button>
       ))}
