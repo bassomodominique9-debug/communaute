@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./home-compact.css";
 import HomeShortcuts from "./HomeShortcuts";
 import ServicesCatalogues from "./ServicesCatalogues";
 import CatalogHub from "./CatalogHub";
@@ -47,6 +48,7 @@ import NewsSection from "./NewsSection";
 import CoordinatorPanel from "./CoordinatorPanel";
 import ImageLibrarySection from "./ImageLibrarySection";
 import { CourseEnrollModal, ForgotPasswordModal, PasswordRecoveryModal, ServiceManager } from "./Step2";
+import "./motivation-compact.css";
 import "./styles.css";
 import "./responsive-mobile.css";
 import "./premium.css";
@@ -571,103 +573,36 @@ function MotivationCarousel() {
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setCurrentIndex((previous) =>
-        (previous + 1) % MOTIVATION_IMAGES.length
-      );
-    }, 6000);
-
+      setCurrentIndex((previous) => (previous + 1) % MOTIVATION_IMAGES.length);
+    }, 5000);
     return () => window.clearInterval(timer);
   }, []);
 
   const currentSlide = MOTIVATION_IMAGES[currentIndex];
 
-  function showPrevious() {
-    setCurrentIndex(
-      (previous) =>
-        (previous - 1 + MOTIVATION_IMAGES.length) %
-        MOTIVATION_IMAGES.length
-    );
-  }
-
-  function showNext() {
-    setCurrentIndex(
-      (previous) => (previous + 1) % MOTIVATION_IMAGES.length
-    );
-  }
-
   return (
-    <section
-      className="motivation-carousel"
-      aria-label="Motivation et entrepreneuriat"
-    >
+    <section className="motivation-carousel" aria-label="Motivation et entrepreneuriat">
       <div className="motivation-image-wrapper">
-        <img
-          key={currentSlide.image}
-          className="motivation-image"
-          src={image(currentSlide.image)}
-          alt={currentSlide.alt}
-        />
-
+        <img key={currentSlide.image} className="motivation-image" src={image(currentSlide.image)} alt={currentSlide.alt} />
         <div className="motivation-overlay">
-          <span className="eyebrow">
-            ED BUSINESS CENTER
-          </span>
-
+          <span className="eyebrow">ED BUSINESS CENTER</span>
           <h2>{currentSlide.title}</h2>
-
           <p>{currentSlide.text}</p>
-
           <div className="motivation-actions">
-            <a
-              className="button button-light"
-              href={BRAND.whatsappQr}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Parlons de ton projet
-            </a>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          className="carousel-arrow carousel-arrow-left"
-          onClick={showPrevious}
-          aria-label="Image précédente"
-        >
-          ‹
-        </button>
-
-        <button
-          type="button"
-          className="carousel-arrow carousel-arrow-right"
-          onClick={showNext}
-          aria-label="Image suivante"
-        >
-          ›
-        </button>
-
-        <div
-          className="carousel-indicators"
-          aria-label="Choisir une image"
-        >
-          {MOTIVATION_IMAGES.map((slide, index) => (
             <button
-              key={slide.image}
               type="button"
-              className={`carousel-indicator ${
-                index === currentIndex ? "indicator-active" : ""
-              }`}
-              onClick={() => setCurrentIndex(index)}
-              aria-label={`Afficher l'image ${index + 1}`}
-              aria-current={index === currentIndex ? "true" : undefined}
-            />
-          ))}
+              className="motivation-cta"
+              onClick={() => window.dispatchEvent(new CustomEvent("ed-navigate", { detail: "services" }))}
+            >
+              Crée ton catalogue et présente tes services
+            </button>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
 /* =====================================================
    SECTION DE PRÉSENTATION
 ===================================================== */
@@ -700,7 +635,7 @@ function IntroSection({ onNavigate, onRegister }) {
         <div className="intro-actions">
           <button
             type="button"
-            className="button button-primary"
+            className="intro-text-link intro-text-primary"
             onClick={() => onNavigate("courses")}
           >
             Découvrir les formations
@@ -708,7 +643,7 @@ function IntroSection({ onNavigate, onRegister }) {
 
           <button
             type="button"
-            className="button button-outline"
+            className="intro-text-link"
             onClick={() => window.open("https://whatsapp.com/channel/0029VbDMmDnC1FuDUIDiXm25", "_blank", "noopener,noreferrer")}
           >
             Rejoindre la communauté
