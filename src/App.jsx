@@ -1333,7 +1333,13 @@ function RegisterModal({
     sex: "",
     password: "",
     confirmPassword: "",
-    referral: "",
+    referral: (() => {
+      try {
+        return (new URLSearchParams(window.location.search).get("ref") || "").trim().toUpperCase().slice(0, 40);
+      } catch (e) {
+        return "";
+      }
+    })(),
   });
 
   const [loading, setLoading] = useState(false);
